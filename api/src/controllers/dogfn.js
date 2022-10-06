@@ -32,7 +32,7 @@ getDogs = async (req, res) => {
       },
     });//Traer los temperamentos
     console.log(mapapi);
-    return [...mapapi, getbd];
+    return [...mapapi, ...getbd];
     //return res.send(mapapi);
   } catch (error) {
     console.log(error);
@@ -41,16 +41,47 @@ getDogs = async (req, res) => {
 //======================================================
 
 /**
- * PONER A DISPOSICIÓN DEL FRONT LA DATA.
+ * PONER A DISPOSICIÓN DEL FRONT LA DATA MEDIANTE DOGSBYNAME.
  * allDogs
- * Función que llama a getDogs, sirviendo los datos al front. 
+ * Función que llama a getDogs, sirviendo los datos indirectamente al front. 
  */
 
 allDogs = async() => {
-  const item = await this.getDogs();
+  const item = await getDogs();
   return item;
-}
+};
+//=========================================================
 
+/**
+ * REALIZAR BUSQUEDA DE DOGS POR NOMBRE.
+ * Poner a disposición del front los datos en la ruta principal, determinar
+ * si viene una busqueda por query o solo servir los datos generales directamente.
+ * NOT READY JET
+ */
+dogsByName = async (req, res) => {
+  try {
+    const alldogs = await allDogs();
+    const { name } = req.query;
+    if(name){
+      console.log(name);
+      const filterName = alldogs.filter(dog => {
+        const datalower = dog.name.toLowerCase();
+        const nameLower = name.toLowerCase();
+        if(datalower.includes(nameLower)){
+          return dog
+        }
+      });
+      filterName.length ? res.status(200).send(filterName) : res.status(404).send('Dog not found');
+    }else{
+      return res.status(200).send(alldogs);
+    }
+  } catch (error) {
+    console.log(error);
+  };
+};
+
+
+//#######################################################
 module.exports = {
-  allDogs,
+  dogsByName,
 };
