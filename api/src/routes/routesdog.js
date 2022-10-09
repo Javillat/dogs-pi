@@ -5,6 +5,6 @@ const routerdog = Router();
 
 routerdog.get('', dog.dogsByName);
 routerdog.get('/:id', dog.dogById);
-// routerdog.post('/', dog.postDog);
+routerdog.post('/', dog.breedPost);
 
 module.exports = routerdog;
