@@ -16,17 +16,13 @@ getDogs = async (req, res) => {
   try {
     const getapi = await axios.get(`https://api.thedogapi.com/v1/breeds`);
     const mapapi = getapi.data.map((item) => {
+      const weightminmax = item.weight.metric.split(' - ');
       return {
         id: item.id,
         name: item.name,
         image: item.image.url,
-        weight: item.weight.metric,//.split(' - '),
-        // .map(char => {
-        //   return{
-        //     min:char.slice(),
-        //     max:char.slice(1)
-        //   }
-        // }),
+        min_weight: weightminmax[0],
+        max_weight: weightminmax[1],
         temperament: item.temperament,
       };
     });
@@ -78,7 +74,7 @@ dogsByName = async (req, res) => {
           return dog
         }
       });
-      filterName.length ? res.status(200).send(filterName) : res.status(404).send('Dog not found');
+      filterName.length ? res.status(200).send(filterName) : res.status(404).send('Breer not found');
     }else{
       return res.status(200).send(alldogs);
     }
@@ -113,18 +109,35 @@ dogById = async(req, res) => {
       return res.status(200).send(getbd);
     }else{
       const getapi = (await axios.get('https://api.thedogapi.com/v1/breeds')).data;
-      console.log(getapi);
-      //const { name, image, height, weight, life_span, temperament } = getapi;}
-      console.log('params ',id);
+      //console.log(getapi);
+      //console.log('params ',id);
       const gotdata = getapi.filter(filtered => parseInt(filtered.id) === parseInt(id));
-      console.log(gotdata);
-      res.status(200).send(gotdata);
+      const { name, image, height, weight, life_span, temperament } = gotdata[0];
+      //console.log(gotdata);
+      const heightminmax = height.metric.split(' - ');
+      const weightminmax = weight.metric.split(' - ');
+      const lifespan = life_span.slice(0,7).split(' - ');
+      const serveddata = {
+        id:id,
+        name: name,
+        image: image.url,
+        min_height: heightminmax[0],
+        max_height: heightminmax[1],
+        min_weight: weightminmax[0],
+        max_weight: weightminmax[1],
+        min_life_span: lifespan[0],
+        max_life_span: lifespan[1],
+        temperament: temperament
+      }
+      //console.log(gotdata[0]);
+      res.status(200).send(serveddata);
     }
   } catch (error) {
     console.log(error);
     res.status(404).send(`Id ${id} not found`);
   }
 }
+//========================================================
 
 //#######################################################
 module.exports = {
