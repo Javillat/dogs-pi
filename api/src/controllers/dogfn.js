@@ -16,7 +16,7 @@ getDogs = async (req, res) => {
   try {
     const getapi = await axios.get(`https://api.thedogapi.com/v1/breeds`);
     const mapapi = getapi.data.map((item) => {
-      const weightminmax = item.weight.metric.split(' - ');
+      const weightminmax = item.weight.metric.split(" - ");
       return {
         id: item.id,
         name: item.name,
@@ -29,10 +29,10 @@ getDogs = async (req, res) => {
     const getbd = await Dog.findAll({
       include: {
         model: Temperament,
-        attributes: ['name'],
-        through: {attributes:[]},
+        attributes: ["name"],
+        through: { attributes: [] },
       },
-    });//Traer los temperamentos
+    }); //Traer los temperamentos
     console.log(mapapi);
     return [...mapapi, ...getbd];
     //return res.send(mapapi);
@@ -45,11 +45,11 @@ getDogs = async (req, res) => {
 /**
  * PONER A DISPOSICIÓN DEL FRONT LA DATA MEDIANTE DOGSBYNAME.
  * allDogs
- * Función que llama a getDogs, sirviendo los datos indirectamente al front. 
+ * Función que llama a getDogs, sirviendo los datos indirectamente al front.
  * READY
  */
 
-allDogs = async() => {
+allDogs = async () => {
   const item = await getDogs();
   return item;
 };
@@ -65,22 +65,24 @@ dogsByName = async (req, res) => {
   try {
     const alldogs = await allDogs();
     const { name } = req.query;
-    if(name){
+    if (name) {
       console.log(name);
-      const filterName = alldogs.filter(dog => {
+      const filterName = alldogs.filter((dog) => {
         const datalower = dog.name.toLowerCase();
         const nameLower = name.toLowerCase();
-        if(datalower.includes(nameLower)){
-          return dog
+        if (datalower.includes(nameLower)) {
+          return dog;
         }
       });
-      filterName.length ? res.status(200).send(filterName) : res.status(404).send('Breer not found');
-    }else{
+      filterName.length
+        ? res.status(200).send(filterName)
+        : res.status(404).send("Breer not found");
+    } else {
       return res.status(200).send(alldogs);
     }
   } catch (error) {
     console.log(error);
-  };
+  }
 };
 //========================================================
 
@@ -89,36 +91,40 @@ dogsByName = async (req, res) => {
  * dogById
  * Función que trae desde la api externa y la bd, los datos referentes a una
  * raza en particular, discriminado por el Id.
- * NOT READY JET
+ * READY
  */
 
-dogById = async(req, res) => {
+dogById = async (req, res) => {
   const { id } = req.params;
   const idUPPER = id.toUpperCase();
   try {
     const getbd = await Dog.findOne({
-      where:{id:idUPPER},
-      include:{
-        model:Temperament,
-        attributes:['name'],
-        through:{attributes:[]},
-      }
+      where: { id: idUPPER },
+      include: {
+        model: Temperament,
+        attributes: ["name"],
+        through: { attributes: [] },
+      },
     });
-    console.log('BD', getbd);
-    if(getbd){
+    console.log("BD", getbd);
+    if (getbd) {
       return res.status(200).send(getbd);
-    }else{
-      const getapi = (await axios.get('https://api.thedogapi.com/v1/breeds')).data;
+    } else {
+      const getapi = (await axios.get("https://api.thedogapi.com/v1/breeds"))
+        .data;
       //console.log(getapi);
       //console.log('params ',id);
-      const gotdata = getapi.filter(filtered => parseInt(filtered.id) === parseInt(id));
-      const { name, image, height, weight, life_span, temperament } = gotdata[0];
+      const gotdata = getapi.filter(
+        (filtered) => parseInt(filtered.id) === parseInt(id)
+      );
+      const { name, image, height, weight, life_span, temperament } =
+        gotdata[0];
       //console.log(gotdata);
-      const heightminmax = height.metric.split(' - ');
-      const weightminmax = weight.metric.split(' - ');
-      const lifespan = life_span.slice(0,7).split(' - ');
+      const heightminmax = height.metric.split(" - ");
+      const weightminmax = weight.metric.split(" - ");
+      const lifespan = life_span.slice(0, 7).split(" - ");
       const serveddata = {
-        id:id,
+        id: id,
         name: name,
         image: image.url,
         min_height: heightminmax[0],
@@ -127,8 +133,8 @@ dogById = async(req, res) => {
         max_weight: weightminmax[1],
         min_life_span: lifespan[0],
         max_life_span: lifespan[1],
-        temperament: temperament
-      }
+        temperament: temperament,
+      };
       //console.log(gotdata[0]);
       res.status(200).send(serveddata);
     }
@@ -136,11 +142,49 @@ dogById = async(req, res) => {
     console.log(error);
     res.status(404).send(`Id ${id} not found`);
   }
-}
+};
 //========================================================
+
+/**
+ * POST BREEDS
+ * Función para crear razas de perros, obtiene los datos desde un formulario en el front
+ * los procesa y establece las relaciones necesarios con temperament.
+ * NOT READY JET
+ */
+
+breedPost = async(req, res) => {
+  const { name, minheight, maxheight, minweight, maxweight, origin, life_span, tempid } = req.body;
+  try {
+    const findone = await Dog.findOne({
+      where:{name:{[Op.eq]:name}}
+    });
+    if(!findone){
+      const idCount = (await Dog.count()) + 1;
+      const idString = 'BD-' + idCount;
+      const breed = await Dog.create({
+        id:idString,
+        name:name,
+        minheight:minheight,
+        maxheight:maxheight,
+        minweight:minweight,
+        maxweight:maxweight,
+        origin:origin,
+        life_span:life_span,
+      });
+      console.log('Proto ',breed.__proto__);
+      await breed.addTemperaments(tempid);
+      return res.status(201).send('Breed succefull created'); 
+    }else{
+      return res.status(304).json('Breed already exist into db, not modyfied');
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 //#######################################################
 module.exports = {
   dogsByName,
   dogById,
+  breedPost,
 };
