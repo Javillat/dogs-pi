@@ -164,7 +164,7 @@ dogById = async (req, res) => {
  */
 
 breedPost = async(req, res) => {
-  const { name, minheight, maxheight, minweight, maxweight, origin, life_span, tempid } = req.body;
+  const { name, minheight, maxheight, minweight, maxweight, image, origin, life_span, tempid } = req.body;
   try {
     const findone = await Dog.findOne({
       where:{name:{[Op.eq]:name}}
@@ -181,6 +181,7 @@ breedPost = async(req, res) => {
         maxweight:maxweight,
         origin:origin,
         life_span:life_span,
+        image:image || 'https://thumbs.dreamstime.com/z/group-twelve-dogs-24189584.jpg'
       });
       //console.log('Proto ',breed.__proto__);
       await breed.addTemperaments(tempid);
