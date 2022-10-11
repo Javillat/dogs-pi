@@ -19,10 +19,13 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
+const chargeTemperaments = require('./src/controllers/temperamentsfn.js')
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
   server.listen(3001, () => {
+    chargeTemperaments();
     console.log('%s listening at 3001'); // eslint-disable-line no-console
+    //console.log('Temperaments charged correctly');
   });
 });
