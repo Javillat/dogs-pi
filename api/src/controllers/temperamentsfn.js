@@ -7,7 +7,7 @@ const { Temperament } = require('../db');
  * Función que trae desde el api externo, los temperamentos en cada breed, los filtra eliminando
  * repeticiones y los guarda a la tabla temperaments, para luego poder servirolos como endpoint.
  * 
- * NOT READY JET
+ * READY
  */
 
 chargeTemperaments = async(req, res) => {
@@ -35,5 +35,28 @@ chargeTemperaments = async(req, res) => {
         console.log(error);
     }
 }
+//==================================================================
 
-module.exports = chargeTemperaments;
+/**
+ * SERVER ENDPOINT
+ * getTemperaments
+ * Función servidora de temperamentos que han sido traidos desde la api externa y guardados en la 
+ * bd local, filtrados, limpiados para ponerlos a disposición del front.
+ * 
+ * NOT READY JET.
+ */
+
+getTemperaments = async(req, res) => {
+    try {
+        const temperamentbd = await Temperament.findAll();
+        console.log(temperamentbd);
+        return res.status(200).send(temperamentbd);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports = {
+    chargeTemperaments, 
+    getTemperaments,
+}

@@ -3,6 +3,6 @@ const temperament = require('../controllers/temperamentsfn.js');
 
 const routertemperament = Router();
 
-//routertemperament.get('/temperaments', temperament.getTemperaments);
+routertemperament.get('/temperaments', temperament.getTemperaments);
 
 module.exports = routertemperament;
