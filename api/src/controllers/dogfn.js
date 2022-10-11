@@ -182,7 +182,7 @@ breedPost = async(req, res) => {
         origin:origin,
         life_span:life_span,
       });
-      console.log('Proto ',breed.__proto__);
+      //console.log('Proto ',breed.__proto__);
       await breed.addTemperaments(tempid);
       return res.status(201).send('Breed succefull created'); 
     }else{
