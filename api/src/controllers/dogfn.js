@@ -146,6 +146,17 @@ dogById = async (req, res) => {
 //========================================================
 
 /**
+ * _isAttribute: [Function (anonymous)],
+  getTemperaments: [Function (anonymous)],
+  countTemperaments: [Function (anonymous)],
+  hasTemperament: [Function (anonymous)],
+  hasTemperaments: [Function (anonymous)],
+  setTemperaments: [Function (anonymous)],
+  addTemperament: [Function (anonymous)],
+  addTemperaments: [Function (anonymous)],
+  removeTemperament: [Function (anonymous)],
+  removeTemperaments: [Function (anonymous)],
+  createTemperament: [Function (anonymous)]
  * POST BREEDS
  * Función para crear razas de perros, obtiene los datos desde un formulario en el front
  * los procesa y establece las relaciones necesarios con temperament.
