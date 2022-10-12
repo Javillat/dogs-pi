@@ -160,7 +160,7 @@ dogById = async (req, res) => {
  * POST BREEDS
  * Función para crear razas de perros, obtiene los datos desde un formulario en el front
  * los procesa y establece las relaciones necesarios con temperament.
- * NOT READY JET
+ * READY
  */
 
 breedPost = async(req, res) => {

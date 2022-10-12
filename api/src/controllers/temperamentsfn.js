@@ -43,7 +43,7 @@ chargeTemperaments = async(req, res) => {
  * Función servidora de temperamentos que han sido traidos desde la api externa y guardados en la 
  * bd local, filtrados, limpiados para ponerlos a disposición del front.
  * 
- * NOT READY JET.
+ * READY.
  */
 
 getTemperaments = async(req, res) => {
