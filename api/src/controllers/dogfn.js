@@ -33,8 +33,19 @@ getDogs = async (req, res) => {
         through: { attributes: [] },
       },
     }); //Traer los temperamentos
-    console.log(mapapi);
-    return [...mapapi, ...getbd];
+    const mapbd = getbd.map((item) => {//Mapear los items de la bd, para enviar como string los temperamentos
+      return {
+        id:item.id,
+        name:item.name,
+        image:item.image,
+        min_weight:item.minweight,
+        max_weight:item.maxweight,
+        temperament:item.temperaments.map(temperament => temperament.name).join(', '),
+      }
+    })
+    console.log('Mappedbd', mapbd);
+    //console.log(mapapi);
+    return [...mapapi, ...mapbd];
     //return res.send(mapapi);
   } catch (error) {
     console.log(error);
