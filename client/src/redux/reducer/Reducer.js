@@ -1,4 +1,4 @@
-import { GET_BREEDS } from "../actions/Actions";
+import { GET_BREEDS, GET_DETAIL } from "../actions/Actions";
 
 const initialState = {
     breeds: [],
@@ -11,6 +11,12 @@ function Reducer(state = initialState, action){
             return{
                 ...state,
                 breeds:action.payload,
+            };
+        
+        case GET_DETAIL:
+            return{
+                ...state,
+               detail:action.payload,
             };
     
         default:return state;
