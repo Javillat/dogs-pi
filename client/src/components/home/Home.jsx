@@ -44,7 +44,7 @@ export default function Home(){
 
    // if(breeds == undefined || !breeds.length) return <Loading />;
     return(
-        <>
+        <div className="container">
             {breeds > 0 || breeds !== undefined
                 ? (currentBreeds.map(breed => (
                     <div key={breed.id}>
@@ -69,7 +69,6 @@ export default function Home(){
                 }
                 {currentPage !== pageNumbers.length ? <button onClick={nextHandler}>Next</button> : null}
             </footer>
-        </>
-
+        </div>
     )
 }
