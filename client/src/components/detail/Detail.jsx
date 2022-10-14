@@ -15,6 +15,10 @@ export default function Detail(){
         dispatch(getDetail(id));//LIMPIAR EL STATE
     },[]);
 
+    // useEffect(() => {
+    //     return () => {};
+    // },[])
+
     const backHandler = (event) => {
         history.push('/home');
     };
