@@ -12,7 +12,7 @@ export default function Card(propsHome) {
         </Link>
       </div>
       <div className="content">
-        <h3>{propsHome.name}</h3>
+        <h3 className="name">{propsHome.name}</h3>
         <div className="weight">
           <h3>Weight</h3>
           <h4>

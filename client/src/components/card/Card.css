@@ -88,6 +88,9 @@
     
   }
 
+  .name{
+    background-color: #3f00ff;
+  }
   .weight{
-    background-color: olive;
+    background-color: #ecd540;
   }
