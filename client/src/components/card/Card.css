@@ -10,7 +10,7 @@
     display : flex;
     align-items : center;
     justify-content : center;  
-    background-color: #ffffff;
+    background-color: #c32148;
     min-height : 800px;
   }
   /* GLOBAL */
@@ -29,9 +29,8 @@
     position: relative;
     width: 300px;
     max-width : 300px;
-    height : 215px; 
-    min-height: 215px; 
-    background-color : #E74C3C;
+    height : 215px;  
+    background-color : #FFFFFF;
     margin : 30px 10px;
     padding : 20px 15px;
     
