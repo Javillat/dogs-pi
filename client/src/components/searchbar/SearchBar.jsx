@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { getBreeds, getBreedsByName } from "../../redux/actions/Actions";
 //import './SeachBar.css';
 
-export default function SearchBar() {
+export default function SearchBar({setCurrentPage}) {
   const dispatch = useDispatch();
   const [breedvalue, setBreedvalue] = useState("");
 
@@ -11,6 +11,7 @@ export default function SearchBar() {
     event.preventDefault();
     dispatch(getBreedsByName(breedvalue));
     setBreedvalue("");
+    setCurrentPage(1);
   }
 
   function handleAllBreeds(event){
