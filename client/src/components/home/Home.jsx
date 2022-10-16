@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import Card from "../card/Card";
+import Nav from "../nav/Nav"
 import { getBreeds } from "../../redux/actions/Actions";
 
 export default function Home(){
@@ -44,31 +45,34 @@ export default function Home(){
 
    // if(breeds == undefined || !breeds.length) return <Loading />;
     return(
-        <div className="container">
-            {breeds > 0 || breeds !== undefined
-                ? (currentBreeds.map(breed => (
-                    <div key={breed.id}>
-                        <Card 
-                            id={breed.id} 
-                            name={breed.name}
-                            image={breed.image}
-                            min_weight={breed.min_weight}
-                            max_weight={breed.max_weight}
-                            temperament={breed.temperament}
-                        />
-                    </div>
-                ))
-                ) : null
-            }
-            <div>Pag {currentPage}</div>
-            <footer>
-                {currentPage !== 1 ? <button onClick={prevHandler}>Previous</button> : null}
-                {
-                    pageNumbers.map(number =>
-                        <button key={number} onClick={() => Page(number)}>{number}</button>)
+        <div className="super_container">
+            <Nav setCurrentPage={setCurrentPage} />
+            <div className="container">
+                {breeds > 0 || breeds !== undefined
+                    ? (currentBreeds.map(breed => (
+                        <div key={breed.id}>
+                            <Card 
+                                id={breed.id} 
+                                name={breed.name}
+                                image={breed.image}
+                                min_weight={breed.min_weight}
+                                max_weight={breed.max_weight}
+                                temperament={breed.temperament}
+                                />
+                        </div>
+                    ))
+                    ) : null
                 }
-                {currentPage !== pageNumbers.length ? <button onClick={nextHandler}>Next</button> : null}
-            </footer>
+                <div>Pag {currentPage}</div>
+                <footer>
+                    {currentPage !== 1 ? <button onClick={prevHandler}>Previous</button> : null}
+                    {
+                        pageNumbers.map(number =>
+                            <button key={number} onClick={() => Page(number)}>{number}</button>)
+                        }
+                    {currentPage !== pageNumbers.length ? <button onClick={nextHandler}>Next</button> : null}
+                </footer>
+            </div>
         </div>
     )
 }
