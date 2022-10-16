@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getBreedsByName } from "../../redux/actions/Actions";
+import { getBreeds, getBreedsByName } from "../../redux/actions/Actions";
 //import './SeachBar.css';
 
 export default function SearchBar() {
@@ -13,6 +13,11 @@ export default function SearchBar() {
     setBreedvalue("");
   }
 
+  function handleAllBreeds(event){
+    event.preventDefault();
+    dispatch(getBreeds());
+  };
+
   return (
     <div className="search_container">
       <form onSubmit={handleSubmit}>
@@ -23,7 +28,8 @@ export default function SearchBar() {
           value={breedvalue}
           onChange={(eventclick) => setBreedvalue(eventclick.target.value)}
         />
-        <input type="submit" value="Search Breed" />
+        <input type="submit" value="Search Breed"/>
+        <input type="button" onClick={handleAllBreeds} className="get_home" value="Load all breed"/>
       </form>
     </div>
   );
