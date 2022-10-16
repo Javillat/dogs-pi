@@ -1,10 +1,10 @@
 import React from "react";
 import SearchBar from "../searchbar/SearchBar";
 
-export default function Nav() {
+export default function Nav({setCurrentPage}) {
   return (
     <nav className="nav">
-        <SearchBar />
+        <SearchBar setCurrentPage={setCurrentPage}/>
     </nav>
   )
 }
