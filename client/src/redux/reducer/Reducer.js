@@ -1,7 +1,8 @@
-import { GET_BREEDS, GET_DETAIL, GET_BREEDS_NAME } from "../actions/Actions";
+import { GET_BREEDS, GET_DETAIL, GET_BREEDS_NAME, ORDER_BY_NAME, ORDER_BY_WEIGHT } from "../actions/Actions";
 
 const initialState = {
     breeds: [],
+    breedsfilter: [],
     detail: [],
 };
 
@@ -11,6 +12,7 @@ function Reducer(state = initialState, action){
             return{
                 ...state,
                 breeds:action.payload,
+                breedsfilter:action.payload,
             };
         
         case GET_DETAIL:
@@ -24,6 +26,23 @@ function Reducer(state = initialState, action){
                 ...state,
                 breeds:action.payload,
             }
+
+        case ORDER_BY_NAME:
+                const order = action.payload === 'ASCENDENT'
+                ? state.breedsfilter.sort((breedA, breedB) => {
+                    if(breedA.name > breedB.name) return 1;
+                    if(breedA.name < breedB.name) return -1;
+                    else return 0;
+                })
+                : state.breedsfilter.sort((breedA, breedB) => {
+                    if(breedA.name > breedB.name) return -1;
+                    if(breedA.name < breedB.name) return 1;
+                    else return 0;
+                })
+                return{
+                    ...state,
+                    breeds:order
+                }
     
         default:return state;
     }
