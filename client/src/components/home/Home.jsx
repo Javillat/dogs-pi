@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Card from "../card/Card";
 import Nav from "../nav/Nav";
-import { getBreeds, orderByNameAction } from "../../redux/actions/Actions";
+import Loading from "../load/Loading";
+import {
+  getBreeds,
+  orderByNameAction,
+  orderByWeightAction,
+} from "../../redux/actions/Actions";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -42,6 +47,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(getBreeds());
   }, []);
+
   useEffect(() => {
     setCurrentPage(1);
     console.log("useeffect ", breeds);
@@ -49,33 +55,52 @@ export default function Home() {
 
   //ORDER
   //const dispatch = useDispatch();
-  const [orden, setOrden] = useState("");
+  //const [orden, setOrden] = useState("");
 
   function orderByName(event) {
     event.preventDefault();
-    //setCurrentPage(2);
     dispatch(orderByNameAction(event.target.value));
     setCurrentPage(1);
-    setOrden(event.target.value);
+    //setOrden(event.target.value);
+  }
+
+  function orderByWeight(event) {
+    event.preventDefault();
+    dispatch(orderByWeightAction(event.target.value));
+    setCurrentPage(1);
   }
 
   // if(breeds == undefined || !breeds.length) return <Loading />;
   return (
     <div className="super_container">
       <Nav setCurrentPage={setCurrentPage} />
+      <div className="filters_orders">
+        <section className="order_name_section">
+          <select
+            className="select_order_name"
+            onChange={(event) => orderByName(event)}
+          >
+            <option value="" defaultValue="">
+              Sort by Name
+            </option>
+            <option value="ASCENDENT">Ascendent Order</option>
+            <option value="DESCENDENT">Descendent Order</option>
+          </select>
+        </section>
 
-      <section className="order_container">
-        <select
-          className="select_order_name"
-          onChange={(event) => orderByName(event)}
-        >
-          <option value="" defaultValue="">
-            Sort by Name
-          </option>
-          <option value="ASCENDENT">Ascendent Order</option>
-          <option value="DESCENDENT">Descendent Order</option>
-        </select>
-      </section>
+        <section className="order_weight_section">
+          <select
+            name="order_weight"
+            onChange={(event) => orderByWeight(event)}
+          >
+            <option value="" defaultValue="">
+              Sort by Weight
+            </option>
+            <option value="asc">Ascendent order</option>
+            <option value="desc">Descendent order</option>
+          </select>
+        </section>
+      </div>
 
       <div className="container">
         {breeds > 0 || breeds !== undefined
@@ -91,7 +116,7 @@ export default function Home() {
                 />
               </div>
             ))
-          : null}
+          : <Loading />}
         <div>Pag {currentPage}</div>
         <footer>
           {currentPage !== 1 ? (

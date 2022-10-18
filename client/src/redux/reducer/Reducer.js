@@ -41,8 +41,17 @@ function Reducer(state = initialState, action){
                 })
                 return{
                     ...state,
-                    breeds:order
+                    breeds: order
                 }
+            
+        case ORDER_BY_WEIGHT:
+            const orderweight = action.payload === 'asc'
+            ? state.breedsfilter.sort((breedA, breedB) => {return breedA.min_weight - breedB.min_weight})
+            : state.breedsfilter.sort((breedA, breedB) => {return breedB.min_weight - breedA.min_weight})
+            return {
+                ...state,
+                breeds:orderweight
+            }
     
         default:return state;
     }

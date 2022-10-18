@@ -39,20 +39,13 @@ export function getBreedsByName(breedname){
 
 //ORDENAMIENTOS Y FILTROS
 export function orderByNameAction(value){
-    // return async (dispatch) => {
-    //     const getData = await axios.get('http://localhost:3001/dogs');
-    //     dispatch({
-    //         type: 'ORDER_BY_NAME',
-    //         payload:ordered
-    //     })
-    // }
     return {
         type: 'ORDER_BY_NAME',
         payload: value
     }
 }
 
-export function orderByWeight(value){
+export function orderByWeightAction(value){
     return {
         type: 'ORDER_BY_WEIGHT',
         payload: value
