@@ -21,6 +21,11 @@ function Reducer(state = initialState, action){
                detail:action.payload,
             };
         
+        // case GET_CLEAN_DETAIL:
+        //     return{
+        //         detail:{},
+        //     }
+        
         case GET_BREEDS_NAME:
             return{
                 ...state,

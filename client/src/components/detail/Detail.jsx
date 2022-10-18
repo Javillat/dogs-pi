@@ -13,7 +13,10 @@ export default function Detail(){
 
     useEffect(()=>{
         dispatch(getDetail(id));//LIMPIAR EL STATE
-    },[]);
+        return(()=>{
+
+        })
+    },[dispatch]);
 
     // useEffect(() => {
     //     return () => {};

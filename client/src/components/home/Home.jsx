@@ -14,7 +14,7 @@ export default function Home() {
   const breeds = useSelector((data) => data.breeds);
   //Paginación
   const [currentPage, setCurrentPage] = useState(1);
-  const cardpage = 8;
+  const cardpage = 8; 
   const lastbreed = currentPage * cardpage;
   const firstbreed = lastbreed - cardpage;
   const currentBreeds =
@@ -48,26 +48,31 @@ export default function Home() {
     dispatch(getBreeds());
   }, []);
 
-  useEffect(() => {
-    setCurrentPage(1);
-    console.log("useeffect ", breeds);
-  }, [breeds]);
-
+  
   //ORDER
   //const dispatch = useDispatch();
-  //const [orden, setOrden] = useState("");
+  const [orden, setOrden] = useState("");
+  useEffect(() => {
+    setCurrentPage(1);
+  }, []);
+  /**
+   * Posibilita que el componente cambie, y que useEffect
+   * en su segundo parametro recargue el componente home
+   */
 
   function orderByName(event) {
+    //setCurrentPage(2);
     event.preventDefault();
     dispatch(orderByNameAction(event.target.value));
-    setCurrentPage(1);
-    //setOrden(event.target.value);
+    //setCurrentPage(1);
+    setOrden(event.target.value);
   }
 
   function orderByWeight(event) {
     event.preventDefault();
     dispatch(orderByWeightAction(event.target.value));
-    setCurrentPage(1);
+    //setCurrentPage(1);
+    setOrden(event.target.value);
   }
 
   // if(breeds == undefined || !breeds.length) return <Loading />;
@@ -116,7 +121,9 @@ export default function Home() {
                 />
               </div>
             ))
-          : <Loading />}
+          : <Loading />
+          }
+
         <div>Pag {currentPage}</div>
         <footer>
           {currentPage !== 1 ? (
