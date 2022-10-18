@@ -14,18 +14,18 @@ export default function Order({ setCurrentPage, orderByName }) {
 //     setOrden(event.target.value);
 //   }
 
-  return (
-    <section className="order_container">
-      <select
-        className="select_order_name"
-        onChange={(event) => orderByName(event)}
-      >
-        <option value="" defaultValue="">
-          Sort by Name
-        </option>
-        <option value="ASCENDENT">Ascendent Order</option>
-        <option value="DESCENDENT">Descendent Order</option>
-      </select>
-    </section>
-  );
+  // return (
+  //   <section className="order_container">
+  //     <select
+  //       className="select_order_name"
+  //       onChange={(event) => orderByName(event)}
+  //     >
+  //       <option value="" defaultValue="">
+  //         Sort by Name
+  //       </option>
+  //       <option value="ASCENDENT">Ascendent Order</option>
+  //       <option value="DESCENDENT">Descendent Order</option>
+  //     </select>
+  //   </section>
+  // );
 }
