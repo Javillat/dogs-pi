@@ -7,7 +7,8 @@ import {
   getBreeds,
   orderByNameAction,
   orderByWeightAction,
-  filterByTemperamentAction
+  filterByTemperamentAction,
+  filterByApiBdAction,
 } from "../../redux/actions/Actions";
 import axios from "axios";
 
@@ -49,10 +50,10 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getBreeds());
-    axios.get('http://localhost:3001/temperaments').then((response)=>{
+    axios.get("http://localhost:3001/temperaments").then((response) => {
       setTemperaments(response.data);
-      console.log('useeffect', temperaments);
-    })
+      console.log("useeffect", temperaments);
+    });
   }, []);
 
   //ORDENAR/FILTRAR
@@ -82,6 +83,12 @@ export default function Home() {
   function filterByTemperament(event) {
     event.preventDefault();
     dispatch(filterByTemperamentAction(event.target.value));
+    setOrden(event.target.value);
+  }
+
+  function filterByApiBd(event){
+    event.preventDefault();
+    dispatch(filterByApiBdAction(event.target.value));
     setOrden(event.target.value);
   }
 
@@ -120,7 +127,7 @@ export default function Home() {
 
         {/* ===================================================== */}
 
-        <section className="select_filter">
+        <section className="select_filter_temperaments">
           <select
             name="select_filter_temperament"
             onChange={(event) => filterByTemperament(event)}
@@ -135,9 +142,21 @@ export default function Home() {
             ))}
           </select>
         </section>
-        
+
         {/* ===================================================== */}
 
+        <section className="select_filter_api_bd">
+          <select
+            name="select_filter_apibd"
+            onChange={(event) => filterByApiBd(event)}
+          >
+            <option value="" defaultValue="">
+              Api/BD Filter
+            </option>
+            <option value="API">Select breeds from API</option>
+            <option value="BD">Select breeds from BD</option>
+          </select>
+        </section>
       </div>
 
       <div className="container">
