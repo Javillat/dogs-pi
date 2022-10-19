@@ -1,9 +1,10 @@
-import { GET_BREEDS, GET_DETAIL, GET_BREEDS_NAME, ORDER_BY_NAME, ORDER_BY_WEIGHT } from "../actions/Actions";
+import { GET_BREEDS, GET_DETAIL, GET_BREEDS_NAME, ORDER_BY_NAME, ORDER_BY_WEIGHT, FILTER_BY_TEMPERAMENT } from "../actions/Actions";
 
 const initialState = {
     breeds: [],
     breedsfilter: [],
     detail: [],
+    temperaments: [],
 };
 
 function Reducer(state = initialState, action){
@@ -57,6 +58,17 @@ function Reducer(state = initialState, action){
                 ...state,
                 breeds:orderweight
             }
+        
+        case FILTER_BY_TEMPERAMENT:
+            const value = action.payload;
+            const filtered = state.breedsfilter.filter((filter) => {
+                return filter.temperament && filter.temperament.split(", ").includes(value);
+            })
+            return {
+                ...state,
+                breeds:filtered
+            }
+
     
         default:return state;
     }

@@ -5,6 +5,7 @@ export const GET_DETAIL = 'GET_DETAIL';
 export const GET_BREEDS_NAME = 'GET_BREEDS_NAME';
 export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const ORDER_BY_WEIGHT = 'ORDER_BY_WEIGHT';
+export const FILTER_BY_TEMPERAMENT = 'FILTER_BY_TEMPERAMENT';
 
 
 export function getBreeds(){
@@ -48,6 +49,13 @@ export function orderByNameAction(value){
 export function orderByWeightAction(value){
     return {
         type: 'ORDER_BY_WEIGHT',
+        payload: value
+    }
+}
+
+export function filterByTemperamentAction(value){
+    return{
+        type: 'FILTER_BY_TEMPERAMENT',
         payload: value
     }
 }

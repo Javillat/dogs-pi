@@ -7,20 +7,23 @@ import {
   getBreeds,
   orderByNameAction,
   orderByWeightAction,
+  filterByTemperamentAction
 } from "../../redux/actions/Actions";
+import axios from "axios";
 
 export default function Home() {
   const dispatch = useDispatch();
   const breeds = useSelector((data) => data.breeds);
   //Paginación
   const [currentPage, setCurrentPage] = useState(1);
-  const cardpage = 8; 
+  const cardpage = 8;
   const lastbreed = currentPage * cardpage;
   const firstbreed = lastbreed - cardpage;
   const currentBreeds =
     breeds !== undefined ? breeds.slice(firstbreed, lastbreed) : [];
   const pageNumbers = [];
   const totalBreeds = breeds.length;
+  const [temperaments, setTemperaments] = useState([]); //Setear los temperamentos
 
   for (let i = 0; i < Math.ceil(totalBreeds / cardpage); i++) {
     pageNumbers.push(i + 1);
@@ -46,11 +49,13 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getBreeds());
+    axios.get('http://localhost:3001/temperaments').then((response)=>{
+      setTemperaments(response.data);
+      console.log('useeffect', temperaments);
+    })
   }, []);
 
-  
-  //ORDER
-  //const dispatch = useDispatch();
+  //ORDENAR/FILTRAR
   const [orden, setOrden] = useState("");
   useEffect(() => {
     setCurrentPage(1);
@@ -61,7 +66,6 @@ export default function Home() {
    */
 
   function orderByName(event) {
-    //setCurrentPage(2);
     event.preventDefault();
     dispatch(orderByNameAction(event.target.value));
     //setCurrentPage(1);
@@ -75,24 +79,17 @@ export default function Home() {
     setOrden(event.target.value);
   }
 
+  function filterByTemperament(event) {
+    event.preventDefault();
+    dispatch(filterByTemperamentAction(event.target.value));
+    setOrden(event.target.value);
+  }
+
   // if(breeds == undefined || !breeds.length) return <Loading />;
   return (
     <div className="super_container">
       <Nav setCurrentPage={setCurrentPage} />
       <div className="filters_orders">
-        <section className="order_name_section">
-          <select
-            className="select_order_name"
-            onChange={(event) => orderByName(event)}
-          >
-            <option value="" defaultValue="">
-              Sort by Name
-            </option>
-            <option value="ASCENDENT">Ascendent Order</option>
-            <option value="DESCENDENT">Descendent Order</option>
-          </select>
-        </section>
-
         <section className="order_weight_section">
           <select
             name="order_weight"
@@ -105,24 +102,61 @@ export default function Home() {
             <option value="desc">Descendent order</option>
           </select>
         </section>
+
+        {/* ===================================================== */}
+
+        <section className="order_name_section">
+          <select
+            name="select_order_name"
+            onChange={(event) => orderByName(event)}
+          >
+            <option value="" defaultValue="">
+              Sort by Name
+            </option>
+            <option value="ASCENDENT">Ascendent Order</option>
+            <option value="DESCENDENT">Descendent Order</option>
+          </select>
+        </section>
+
+        {/* ===================================================== */}
+
+        <section className="select_filter">
+          <select
+            name="select_filter_temperament"
+            onChange={(event) => filterByTemperament(event)}
+          >
+            <option value="" defaultValue="">
+              Temperament Filter
+            </option>
+            {temperaments.map((temp) => (
+              <option key={temp.id} value={temp.name}>
+                {temp.name}
+              </option>
+            ))}
+          </select>
+        </section>
+        
+        {/* ===================================================== */}
+
       </div>
 
       <div className="container">
-        {breeds > 0 || breeds !== undefined
-          ? currentBreeds.map((breed) => (
-              <div key={breed.id}>
-                <Card
-                  id={breed.id}
-                  name={breed.name}
-                  image={breed.image}
-                  min_weight={breed.min_weight}
-                  max_weight={breed.max_weight}
-                  temperament={breed.temperament}
-                />
-              </div>
-            ))
-          : <Loading />
-          }
+        {breeds > 0 || breeds !== undefined ? (
+          currentBreeds.map((breed) => (
+            <div key={breed.id}>
+              <Card
+                id={breed.id}
+                name={breed.name}
+                image={breed.image}
+                min_weight={breed.min_weight}
+                max_weight={breed.max_weight}
+                temperament={breed.temperament}
+              />
+            </div>
+          ))
+        ) : (
+          <Loading />
+        )}
 
         <div>Pag {currentPage}</div>
         <footer>
