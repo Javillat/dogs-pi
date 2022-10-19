@@ -3,9 +3,10 @@ import {
   GET_DETAIL,
   GET_BREEDS_NAME,
   ORDER_BY_NAME,
-  ORDER_BY_WEIGHT,
+  ORDER_BY_MIN_WEIGHT,
+  ORDER_BY_MAX_WEIGHT,
   FILTER_BY_TEMPERAMENT,
-  FILTER_BY_API_BD
+  FILTER_BY_API_BD,
 } from "../actions/Actions";
 
 const initialState = {
@@ -59,7 +60,7 @@ function Reducer(state = initialState, action) {
         breeds: order,
       };
 
-    case ORDER_BY_WEIGHT:
+    case ORDER_BY_MIN_WEIGHT:
       const orderweight =
         action.payload === "asc"
           ? state.breedsfilter.sort((breedA, breedB) => {
@@ -71,6 +72,20 @@ function Reducer(state = initialState, action) {
       return {
         ...state,
         breeds: orderweight,
+      };
+
+    case ORDER_BY_MAX_WEIGHT:
+      const ordermaxweight =
+        action.payload === "asc"
+          ? state.breedsfilter.sort((breedA, breedB) => {
+              return breedA.max_weight - breedB.max_weight;
+            })
+          : state.breedsfilter.sort((breedA, breedB) => {
+              return breedB.max_weight - breedA.max_weight;
+            });
+      return {
+        ...state,
+        breeds: ordermaxweight,
       };
 
     case FILTER_BY_TEMPERAMENT:
@@ -86,22 +101,25 @@ function Reducer(state = initialState, action) {
       };
 
     case FILTER_BY_API_BD:
-        const valueapibd = action.payload;
-        if(valueapibd.includes('BD')){
-            const filteredbd = state.breedsfilter.filter(breeds => breeds.id.toString().includes(valueapibd));
-            return{
-                ...state,
-                breeds:filteredbd
-            }
-        }else{
-            let bd = 'BD';
-            const filteredapi = state.breedsfilter.filter(breeds => !breeds.id.toString().includes(bd));
-            return{
-                ...state,
-                breeds:filteredapi
-            }
-        }
-
+      const valueapibd = action.payload;
+      if (valueapibd.includes("BD")) {
+        const filteredbd = state.breedsfilter.filter((breeds) =>
+          breeds.id.toString().includes(valueapibd)
+        );
+        return {
+          ...state,
+          breeds: filteredbd,
+        };
+      } else {
+        let bd = "BD";
+        const filteredapi = state.breedsfilter.filter(
+          (breeds) => !breeds.id.toString().includes(bd)
+        );
+        return {
+          ...state,
+          breeds: filteredapi,
+        };
+      }
 
     default:
       return state;

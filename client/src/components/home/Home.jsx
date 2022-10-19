@@ -6,7 +6,8 @@ import Loading from "../load/Loading";
 import {
   getBreeds,
   orderByNameAction,
-  orderByWeightAction,
+  orderByMinWeightAction,
+  orderByMaxWeightAction,
   filterByTemperamentAction,
   filterByApiBdAction,
 } from "../../redux/actions/Actions";
@@ -73,12 +74,21 @@ export default function Home() {
     setOrden(event.target.value);
   }
 
-  function orderByWeight(event) {
-    event.preventDefault();
-    dispatch(orderByWeightAction(event.target.value));
-    //setCurrentPage(1);
-    setOrden(event.target.value);
-  }
+//MINIMO Y MAXIMO ORDENAMIENTO
+
+function orderByMaxWeight(event) {
+  event.preventDefault();
+  dispatch(orderByMaxWeightAction(event.target.value));
+  setOrden(event.target.value);
+}
+
+function orderByMinWeight(event) {
+  event.preventDefault();
+  dispatch(orderByMinWeightAction(event.target.value));
+  //setCurrentPage(1);
+  setOrden(event.target.value);
+}
+  //+++++++++++++++++++++++++++++++++++++++++++++
 
   function filterByTemperament(event) {
     event.preventDefault();
@@ -97,13 +107,29 @@ export default function Home() {
     <div className="super_container">
       <Nav setCurrentPage={setCurrentPage} />
       <div className="filters_orders">
-        <section className="order_weight_section">
+
+      <section className="order_weight_max_section">
           <select
-            name="order_weight"
-            onChange={(event) => orderByWeight(event)}
+            name="order_weight_max"
+            onChange={(event) => orderByMaxWeight(event)}
           >
             <option value="" defaultValue="">
-              Sort by Weight
+              SORT BY MAX WEIGHT
+            </option>
+            <option value="asc">Ascendent order</option>
+            <option value="desc">Descendent order</option>
+          </select>
+        </section>
+
+        {/* ===================================================== */}
+
+        <section className="order_weight_min_section">
+          <select
+            name="order_weight_min"
+            onChange={(event) => orderByMinWeight(event)}
+          >
+            <option value="" defaultValue="">
+              SORT BY MIN WEIGHT
             </option>
             <option value="asc">Ascendent order</option>
             <option value="desc">Descendent order</option>

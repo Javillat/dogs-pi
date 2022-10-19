@@ -4,7 +4,8 @@ export const GET_BREEDS = 'GET_BREEDS';
 export const GET_DETAIL = 'GET_DETAIL';
 export const GET_BREEDS_NAME = 'GET_BREEDS_NAME';
 export const ORDER_BY_NAME = 'ORDER_BY_NAME';
-export const ORDER_BY_WEIGHT = 'ORDER_BY_WEIGHT';
+export const ORDER_BY_MIN_WEIGHT = 'ORDER_BY_MIN_WEIGHT';
+export const ORDER_BY_MAX_WEIGHT = 'ORDER_BY_MAX_WEIGHT';
 export const FILTER_BY_TEMPERAMENT = 'FILTER_BY_TEMPERAMENT';
 export const FILTER_BY_API_BD = 'FILTER_BY_API_BD';
 
@@ -47,9 +48,16 @@ export function orderByNameAction(value){
     }
 }
 
-export function orderByWeightAction(value){
+export function orderByMinWeightAction(value){
     return {
-        type: 'ORDER_BY_WEIGHT',
+        type: 'ORDER_BY_MIN_WEIGHT',
+        payload: value
+    }
+}
+
+export function orderByMaxWeightAction(value){
+    return {
+        type: 'ORDER_BY_MAX_WEIGHT',
         payload: value
     }
 }
