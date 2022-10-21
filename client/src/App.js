@@ -5,6 +5,7 @@ import Detail from "../src/components/detail/Detail"
 //import Nav from '../src/components/nav/Nav'
 import "./App.css";
 import LandingPage from "./components/landing/Landing";
+import CreateBreed from "./components/form/Createbreed";
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
         </Route>
         <Route path="/detail/:id">
           <Detail />
+        </Route>
+        <Route path="/dogs">
+          <CreateBreed />
         </Route>
       </Switch>
     </div>
