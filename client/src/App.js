@@ -21,7 +21,7 @@ function App() {
         <Route path="/detail/:id">
           <Detail />
         </Route>
-        <Route path="/dogs">
+        <Route path="/create">
           <CreateBreed />
         </Route>
       </Switch>
