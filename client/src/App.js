@@ -6,11 +6,11 @@ import Detail from "../src/components/detail/Detail"
 import "./App.css";
 import LandingPage from "./components/landing/Landing";
 import CreateBreed from "./components/form/Createbreed";
+import Favorites from "./components/favorites/Favorites";
 
 function App() {
   return (
     <div className="App">
-      <h1>Henry Dogs</h1>
        <Switch>
         <Route exact path="/">
           <LandingPage />
@@ -23,6 +23,9 @@ function App() {
         </Route>
         <Route path="/create">
           <CreateBreed />
+        </Route>
+        <Route path="/favorites">
+          <Favorites />
         </Route>
       </Switch>
     </div>
