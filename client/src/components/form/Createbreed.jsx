@@ -18,6 +18,7 @@ export default function CreateBreed() {
     origin: "",
     life_span: "",
   });
+  const history = useHistory();
   const nameInput = useRef(null); //Setear nameInput useRef al name
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export default function CreateBreed() {
       error.name = "Name is required";
     }
     if (nameValidate !== 0 && nameValidate < 4) {
-      error.name = "Name lenght must be at less 4 characters";
+      error.name = "Name lenght must be at lest 4 characters";
     }
     if (nameValidate !== 0) {
       if (!/^[a-z A-Z]+$/.test(input.name)) {
@@ -167,7 +168,7 @@ export default function CreateBreed() {
       }
     }
     if (input.origin.length < 4) {
-      error.origin = "Origin must have at less 4 characters";
+      error.origin = "Origin must have at lest 4 characters";
     }
     //======================================Cierre origin
     //**************************************Validaciones lifespan
@@ -184,7 +185,21 @@ export default function CreateBreed() {
       error.life_span = "Lifespan can`t be equal or menor than 0.";
     }
     //======================================Cierre lifespan
+    //**************************************Validaciones tempId
+    // if (input.tempid.length < 1) {
+    //   error.life_span = "At lest one temperament must be selected";
+    // }
     return error;
+  };
+
+  const handleChangeCheckbox = (event) => {
+    if (!input.tempid.includes(event.target.value)) {
+      setInput({
+        ...input,
+        tempid: [...input.tempid, event.target.value],
+      });
+      console.log(input.tempid);
+    }
   };
 
   const handleChange = (event) => {
@@ -200,18 +215,44 @@ export default function CreateBreed() {
 
   const submitBreed = (event) => {
     event.preventDefault();
+    axios.post("http://localhost:3001/dogs", input);
+    setTimeout(()=>{
+        alert("Breed succefull created!!!")
+           if (!window.confirm("Add new breed?")){
+               history.push("/home");
+           }else{
+            window.open("/create", "_self");
+           }
+    },1000)
+
+    setInput({
+      tempid: [],
+      name: "",
+      minheight: "",
+      maxheight: "",
+      minweight: "",
+      maxweight: "",
+      image: "",
+      origin: "",
+      life_span: "",
+    });
+
   };
 
   return (
     <div>
-      <div>
+      <div className="form_container">
         <form
-          className={error && "error"}
+        //   className={!error ? "clean" : "error"}
           onSubmit={(event) => submitBreed(event)}
         >
-          <label htmlFor="name">
-            {!error ? "Name:" : error.name}
+          <div className="div_name">
+            <label htmlFor="name" className="label_left">
+              {/* {!error ? "Name:" : error.name} */}
+              Name
+            </label>
             <input
+              className="input_text"
               key="name"
               ref={nameInput} //Referencia del name
               type="text"
@@ -220,58 +261,75 @@ export default function CreateBreed() {
               value={input.name}
               onChange={(event) => handleChange(event)}
             />
-          </label>
-          <label>
-            Minimun Height
+            {error && error.name}
+          </div>
+          {/* <div className="height_superior"> */}
+          <fieldset className="fieldset_height">
+            <legend>HEIGHT</legend>
+            <div className="height_l">
+              <label htmlFor="minheight">Minimun</label>
+              <input
+                className="input_number"
+                key="minheight"
+                type="number"
+                placeholder="Minimun Height..."
+                name="minheight"
+                value={input.minheight}
+                onChange={(event) => handleChange(event)}
+              />
+              {error && error.minheight}
+            </div>
+            <div className="height_r">
+              <label htmlFor="maxheight">Maximun</label>
+              <input
+                className="input_number"
+                key="maxheight"
+                type="number"
+                name="maxheight"
+                placeholder="Maximun Height..."
+                value={input.maxheight}
+                onChange={(event) => handleChange(event)}
+              />
+              {error && error.maxheight}
+            </div>
+          </fieldset>
+          {/* </div> */}
+          <fieldset className="fieldset_weight">
+            <legend>WEIGHT</legend>
+            <div className="weight_l">
+              <label htmlFor="minweight">Minimun</label>
+              <input
+                className="input_number"
+                key="minweight"
+                type="number"
+                name="minweight"
+                placeholder="Minimun Weight..."
+                value={input.minweight}
+                onChange={(event) => handleChange(event)}
+              />
+              {error && error.minweight}
+            </div>
+            <div className="weight_r">
+              <label htmlFor="maxweight">Maximun</label>
+              <input
+                className="input_number"
+                key="maxweight"
+                type="number"
+                name="maxweight"
+                placeholder="Maximun Weight..."
+                value={input.maxweight}
+                onChange={(event) => handleChange(event)}
+              />
+              {error && error.maxweight}
+            </div>
+          </fieldset>
+          <div className="div_image">
+            <label htmlFor="image" className="label_left">
+              Breed Image
+            </label>
+
             <input
-              key="minheight"
-              type="number"
-              placeholder="Minimun Height..."
-              name="minheight"
-              value={input.minheight}
-              onChange={(event) => handleChange(event)}
-            />
-            {error.minheight}
-          </label>
-          <label>
-            Maximun Height
-            <input
-              key="maxheight"
-              type="number"
-              name="maxheight"
-              placeholder="Maximun Height..."
-              value={input.maxheight}
-              onChange={(event) => handleChange(event)}
-            />
-            {error.maxheight}
-          </label>
-          <label>
-            Minimun Weight
-            <input
-              key="minweight"
-              type="number"
-              name="minweight"
-              placeholder="Minimun Weight..."
-              value={input.minweight}
-              onChange={(event) => handleChange(event)}
-            />
-            {error.minweight}
-          </label>
-          <label>
-            Maximun Weight
-            <input
-              key="maxweight"
-              type="number"
-              name="maxweight"
-              placeholder="Maximun Weight..."
-              value={input.maxweight}
-              onChange={(event) => handleChange(event)}
-            />
-            {error.maxweight}
-          </label>
-          <label>
-            Breed Image
-            <input
+              className="input_text"
               key="image"
               type="text"
               name="image"
@@ -279,10 +337,14 @@ export default function CreateBreed() {
               value={input.image}
               onChange={(event) => handleChange(event)}
             />
-          </label>
-          <label>
-            Origin
+          </div>
+          <div className="div_origin">
+            <label htmlFor="origin" className="label_left">
+              Origin
+            </label>
+
             <input
+              className="input_text"
               key="origin"
               type="text"
               name="origin"
@@ -290,11 +352,15 @@ export default function CreateBreed() {
               value={input.origin}
               onChange={(event) => handleChange(event)}
             />
-            {error.origin}
-          </label>
-          <label>
-            Lifespan
+            {error && error.origin}
+          </div>
+          <div className="div_lifespan">
+            <label htmlFor="life_span" className="label_left">
+              Lifespan
+            </label>
+
             <input
+              className="input_number"
               key="life_span"
               type="number"
               name="life_span"
@@ -302,15 +368,25 @@ export default function CreateBreed() {
               value={input.life_span}
               onChange={(event) => handleChange(event)}
             />
-            {error.life_span}
-          </label>
-
-          {temperaments.slice(0, 20).map((temp) => (
-            <label key={temp.id}>
-              <input type="checkbox" key={temp.id} value={temp.id} />{" "}
-              {temp.name}
-            </label>
-          ))}
+            {error && error.life_span}
+          </div>
+          <fieldset>
+              <legend>TEMPERAMENTS</legend>
+            <div className="div_temperaments">
+              {temperaments.slice(0, 20).map((temp) => (
+                <label key={temp.id}>
+                  <input
+                    className="item_temperament"
+                    type="checkbox"
+                    key={temp.id}
+                    value={temp.id}
+                    onChange={handleChangeCheckbox}
+                  />{" "}
+                  {temp.name}
+                </label>
+              ))}
+            </div>
+          </fieldset>
           {/* {error && <p>{error}</p>} */}
           <input
             type="submit"
