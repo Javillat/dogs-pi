@@ -11,6 +11,9 @@ export default function Nav({ setCurrentPage }) {
         <Link to="/create">
           <button>Create Breed</button>
         </Link>
+        <Link to="/favorites">
+          <button>Favorites</button>
+        </Link>
       </div>
       {/* <Order setCurrentPage={setCurrentPage} /> */}
     </nav>
