@@ -19,7 +19,8 @@ export default function Card(propsHome) {
             Min {propsHome.min_weight} Max {propsHome.max_weight}
           </h4>
         </div>
-        <h4>{propsHome.temperament}</h4>
+        <h4 className="temperaments">{propsHome.temperament}</h4>
+        <button className="favorites">ADD FAVORITES</button>
       </div>
     </div>
   );
