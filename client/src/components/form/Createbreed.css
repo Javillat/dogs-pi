@@ -1,3 +1,115 @@
-.error{
-    background-color: red;
+.form_container {
+    display: flex;
+    /* justify-content: space-between;
+    flex-wrap: wrap; */
+    /* grid-template-columns: 480px repeat(2, 230px) repeat(1, 480px);
+    grid-template-rows: repeat(6, 15px);
+    grid-template-areas: "name name"
+        "menu main"
+        "mweightl mweightr"
+        "imagen imagen"
+        "origin origin"
+        "lifespan lifespan";
+        justify-items: stretch;
+        align-items: stretch;
+        justify-content: stretch;
+        align-content: stretch; */
+    width: 530px;
+    height: 730px;
+    border-radius: 5px;
+    background-color: #E6B0AA;
+    margin: auto;
+    padding: 18px;
 }
+label{
+    display: block;
+    margin: .2em 0 0 0;
+}
+
+.fieldset_height{
+    float: left;
+    width: 48%;
+    text-align: left;
+    border-color: #5f9ea0;
+    border-width: 2px;
+}
+
+.fieldset_weight{
+    text-align: right;
+    background-color: #E6B0AA;
+    border-color: #5f9ea0;
+    border-width: 2px;
+}
+
+.div_temperaments fieldset{
+    width: 490px;
+}
+
+.input_text {
+    width: 99%;
+    padding: 13px;
+    margin: 5px 0 8px 0;
+    border-radius: 20px;
+    border: none;
+    background: #f1f1f1;
+    text-align: left;
+}
+
+.input_text:focus,
+.input_number:focus {
+    background-color: #9ed7bd;
+}
+
+.input_number {
+    display: flex;
+    width: 99%;
+    padding: 13px;
+    margin: 5px 0px 8px 0;
+    border-radius: 20px;
+    border: none;
+    background: #f1f1f1;
+    text-align: left;
+}
+
+.div_temperaments {
+    padding: 0 5px 0 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 1px;
+    width: 490px;
+    /* justify-content: space-between;
+    align-content: stretch;
+    flex-wrap: wrap; */
+}
+
+.item_temperament {
+    width: 13px;
+    height: 14px;
+    padding: 1em;
+}
+
+.label_left {
+    text-align: left;
+}
+
+.clean,
+.input_text,
+.input_number {
+    background-color: whitesmoke;
+    border: 2px solid darksalmon;
+    border-radius: 4px;
+    font-size: 13;
+    color: darkblues;
+
+}
+
+/* .error,
+.input_text,
+.input_number {
+    border-color: red;
+    border-radius: 4px;
+    color: red;
+    font-size: 12px;
+
+} */
