@@ -2,18 +2,22 @@ import {
   GET_BREEDS,
   GET_DETAIL,
   GET_BREEDS_NAME,
+  GET_CLEAN_DETAIL,
   ORDER_BY_NAME,
   ORDER_BY_MIN_WEIGHT,
   ORDER_BY_MAX_WEIGHT,
   FILTER_BY_TEMPERAMENT,
   FILTER_BY_API_BD,
+  ADD_FAVORITES,
+  REMOVE_FAVORITES,
 } from "../actions/Actions";
 
 const initialState = {
   breeds: [],
   breedsfilter: [],
-  detail: [],
+  detail: {},
   temperaments: [],
+  favorites: [],
 };
 
 function Reducer(state = initialState, action) {
@@ -31,15 +35,30 @@ function Reducer(state = initialState, action) {
         detail: action.payload,
       };
 
-    // case GET_CLEAN_DETAIL:
-    //     return{
-    //         detail:{},
-    //     }
+    case GET_CLEAN_DETAIL:
+      return {
+        ...state,
+        detail: action.payload,
+      };
 
     case GET_BREEDS_NAME:
       return {
         ...state,
         breeds: action.payload,
+      };
+
+    case ADD_FAVORITES:
+      return {
+        ...state,
+        favorites: [...state.favorites, action.payload],
+      };
+
+    case REMOVE_FAVORITES:
+      return {
+        ...state,
+        favorites: state.favorites.filter(
+          (breed) => breed.id !== action.payload
+        ),
       };
 
     case ORDER_BY_NAME:
@@ -122,7 +141,7 @@ function Reducer(state = initialState, action) {
       }
 
     default:
-      return state;
+      return { ...state };
   }
 }
 
