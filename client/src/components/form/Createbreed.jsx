@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Createbreed.css";
 
 export default function CreateBreed() {
@@ -241,6 +241,7 @@ export default function CreateBreed() {
 
   return (
     <div>
+      <Link to='/home'><button className="button gohome">Go Home</button></Link>
       <div className="form_container">
         <form
         //   className={!error ? "clean" : "error"}
@@ -388,7 +389,7 @@ export default function CreateBreed() {
             </div>
           </fieldset>
           {/* {error && <p>{error}</p>} */}
-          <input
+          <input className="buttonsubmit submit"
             type="submit"
             value="Send breed"
             disabled={
