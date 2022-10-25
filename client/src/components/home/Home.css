@@ -1,0 +1,22 @@
+.filters_orders{
+    background-color: #142b47;
+    display: flex;
+    /* overflow: auto; */
+    /* display: block; */
+    justify-content: space-around;
+}/*
+.order_weight_max_section{
+    float:left ;
+}
+.order_weight_min_section{
+    float: left;
+}
+.order_name_section{
+    float: none;
+}
+.select_filter_temperaments{
+    float: right;
+}
+.select_filter_api_bd{
+    float: right;
+} */

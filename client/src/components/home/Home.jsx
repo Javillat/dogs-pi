@@ -12,6 +12,7 @@ import {
   filterByApiBdAction,
 } from "../../redux/actions/Actions";
 import axios from "axios";
+import "./Home.css"
 
 export default function Home() {
   const [isLoading, setLoading] = useState(false);
@@ -77,20 +78,20 @@ export default function Home() {
     setOrden(event.target.value);
   }
 
-//MINIMO Y MAXIMO ORDENAMIENTO
+  //MINIMO Y MAXIMO ORDENAMIENTO
 
-function orderByMaxWeight(event) {
-  event.preventDefault();
-  dispatch(orderByMaxWeightAction(event.target.value));
-  setOrden(event.target.value);
-}
+  function orderByMaxWeight(event) {
+    event.preventDefault();
+    dispatch(orderByMaxWeightAction(event.target.value));
+    setOrden(event.target.value);
+  }
 
-function orderByMinWeight(event) {
-  event.preventDefault();
-  dispatch(orderByMinWeightAction(event.target.value));
-  //setCurrentPage(1);
-  setOrden(event.target.value);
-}
+  function orderByMinWeight(event) {
+    event.preventDefault();
+    dispatch(orderByMinWeightAction(event.target.value));
+    //setCurrentPage(1);
+    setOrden(event.target.value);
+  }
   //+++++++++++++++++++++++++++++++++++++++++++++
 
   function filterByTemperament(event) {
@@ -99,7 +100,7 @@ function orderByMinWeight(event) {
     setOrden(event.target.value);
   }
 
-  function filterByApiBd(event){
+  function filterByApiBd(event) {
     event.preventDefault();
     dispatch(filterByApiBdAction(event.target.value));
     setOrden(event.target.value);
@@ -107,123 +108,125 @@ function orderByMinWeight(event) {
 
   // if(breeds == undefined || !breeds.length) return <Loading />;
   return (
-  <>
-    {isLoading ? <Loading /> : 
-    <div className="super_container">
-      <Nav setCurrentPage={setCurrentPage} />
-      <div className="filters_orders">
+    <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className="super_container">
+          <Nav setCurrentPage={setCurrentPage} />
+          <div className="filters_orders">
+            <section className="order_weight_max_section">
+              <select
+                name="order_weight_max"
+                onChange={(event) => orderByMaxWeight(event)}
+              >
+                <option value="" defaultValue="">
+                  SORT BY MAX WEIGHT
+                </option>
+                <option value="asc">Ascendent order</option>
+                <option value="desc">Descendent order</option>
+              </select>
+            </section>
 
-      <section className="order_weight_max_section">
-          <select
-            name="order_weight_max"
-            onChange={(event) => orderByMaxWeight(event)}
-            >
-            <option value="" defaultValue="">
-              SORT BY MAX WEIGHT
-            </option>
-            <option value="asc">Ascendent order</option>
-            <option value="desc">Descendent order</option>
-          </select>
-        </section>
+            {/* ===================================================== */}
 
-        {/* ===================================================== */}
+            <section className="order_weight_min_section">
+              <select
+                name="order_weight_min"
+                onChange={(event) => orderByMinWeight(event)}
+              >
+                <option value="" defaultValue="">
+                  SORT BY MIN WEIGHT
+                </option>
+                <option value="asc">Ascendent order</option>
+                <option value="desc">Descendent order</option>
+              </select>
+            </section>
 
-        <section className="order_weight_min_section">
-          <select
-            name="order_weight_min"
-            onChange={(event) => orderByMinWeight(event)}
-            >
-            <option value="" defaultValue="">
-              SORT BY MIN WEIGHT
-            </option>
-            <option value="asc">Ascendent order</option>
-            <option value="desc">Descendent order</option>
-          </select>
-        </section>
+            {/* ===================================================== */}
 
-        {/* ===================================================== */}
+            <section className="order_name_section">
+              <select
+                name="select_order_name"
+                onChange={(event) => orderByName(event)}
+              >
+                <option value="" defaultValue="">
+                  Sort by Name
+                </option>
+                <option value="ASCENDENT">Ascendent Order</option>
+                <option value="DESCENDENT">Descendent Order</option>
+              </select>
+            </section>
 
-        <section className="order_name_section">
-          <select
-            name="select_order_name"
-            onChange={(event) => orderByName(event)}
-            >
-            <option value="" defaultValue="">
-              Sort by Name
-            </option>
-            <option value="ASCENDENT">Ascendent Order</option>
-            <option value="DESCENDENT">Descendent Order</option>
-          </select>
-        </section>
+            {/* ===================================================== */}
 
-        {/* ===================================================== */}
+            <section className="select_filter_temperaments">
+              <select
+                name="select_filter_temperament"
+                onChange={(event) => filterByTemperament(event)}
+              >
+                <option value="" defaultValue="">
+                  Temperament Filter
+                </option>
+                {temperaments.map((temp) => (
+                  <option key={temp.id} value={temp.name}>
+                    {temp.name}
+                  </option>
+                ))}
+              </select>
+            </section>
 
-        <section className="select_filter_temperaments">
-          <select
-            name="select_filter_temperament"
-            onChange={(event) => filterByTemperament(event)}
-            >
-            <option value="" defaultValue="">
-              Temperament Filter
-            </option>
-            {temperaments.map((temp) => (
-              <option key={temp.id} value={temp.name}>
-                {temp.name}
-              </option>
-            ))}
-          </select>
-        </section>
+            {/* ===================================================== */}
 
-        {/* ===================================================== */}
+            <section className="select_filter_api_bd">
+              <select
+                name="select_filter_apibd"
+                onChange={(event) => filterByApiBd(event)}
+              >
+                <option value="" defaultValue="">
+                  Api/BD Filter
+                </option>
+                <option value="API">Select breeds from API</option>
+                <option value="BD">Select breeds from BD</option>
+              </select>
+            </section>
+          </div>
 
-        <section className="select_filter_api_bd">
-          <select
-            name="select_filter_apibd"
-            onChange={(event) => filterByApiBd(event)}
-            >
-            <option value="" defaultValue="">
-              Api/BD Filter
-            </option>
-            <option value="API">Select breeds from API</option>
-            <option value="BD">Select breeds from BD</option>
-          </select>
-        </section>
-      </div>
-
-      <div className="container">
-        {breeds > 0 || breeds !== undefined ? (
-          currentBreeds.map((breed) => (
-            <div key={breed.id}>
-              <Card
-                id={breed.id}
-                name={breed.name}
-                image={breed.image}
-                min_weight={breed.min_weight}
-                max_weight={breed.max_weight}
-                temperament={breed.temperament}
-                />
-            </div>
-          ))
-          ) : (
-            <Loading />
+          <div className="container">
+            {breeds > 0 || breeds !== undefined ? (
+              currentBreeds.map((breed) => (
+                <div key={breed.id}>
+                  <Card
+                    id={breed.id}
+                    name={breed.name}
+                    image={breed.image}
+                    min_weight={breed.min_weight}
+                    max_weight={breed.max_weight}
+                    temperament={breed.temperament}
+                  />
+                </div>
+              ))
+            ) : (
+              <Loading />
             )}
 
-        <div>Pag {currentPage}</div>
-        <footer>
-          {currentPage !== 1 ? (
-            <button onClick={prevHandler}>Previous</button>
-            ) : null}
-          {pageNumbers.map((number) => (
-            <button key={number} onClick={() => Page(number)}>
-              {number}
-            </button>
-          ))}
-          {currentPage !== pageNumbers.length ? (
-            <button onClick={nextHandler}>Next</button>
-            ) : null}
-        </footer>
-      </div>
-    </div>}
-  </>
+            <div>Pag {currentPage}</div>
+            <footer>
+              {currentPage !== 1 ? (
+                <button onClick={prevHandler}>Previous</button>
+              ) : null}
+              {pageNumbers.map((number) => (
+                <button key={number} onClick={() => Page(number)}>
+                  {number}
+                </button>
+              ))}
+              {currentPage !== pageNumbers.length ? (
+                <button onClick={nextHandler}>Next</button>
+              ) : null}
+            </footer>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
