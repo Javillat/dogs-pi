@@ -14,6 +14,7 @@ import {
 import axios from "axios";
 
 export default function Home() {
+  const [isLoading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const breeds = useSelector((data) => data.breeds);
   //Paginación
@@ -50,9 +51,11 @@ export default function Home() {
   //Paginación
 
   useEffect(() => {
+    setLoading(true);
     dispatch(getBreeds());
     axios.get("http://localhost:3001/temperaments").then((response) => {
       setTemperaments(response.data);
+      setLoading(false);
       console.log("useeffect", temperaments);
     });
   }, []);
@@ -104,6 +107,8 @@ function orderByMinWeight(event) {
 
   // if(breeds == undefined || !breeds.length) return <Loading />;
   return (
+  <>
+    {isLoading ? <Loading /> : 
     <div className="super_container">
       <Nav setCurrentPage={setCurrentPage} />
       <div className="filters_orders">
@@ -112,7 +117,7 @@ function orderByMinWeight(event) {
           <select
             name="order_weight_max"
             onChange={(event) => orderByMaxWeight(event)}
-          >
+            >
             <option value="" defaultValue="">
               SORT BY MAX WEIGHT
             </option>
@@ -127,7 +132,7 @@ function orderByMinWeight(event) {
           <select
             name="order_weight_min"
             onChange={(event) => orderByMinWeight(event)}
-          >
+            >
             <option value="" defaultValue="">
               SORT BY MIN WEIGHT
             </option>
@@ -142,7 +147,7 @@ function orderByMinWeight(event) {
           <select
             name="select_order_name"
             onChange={(event) => orderByName(event)}
-          >
+            >
             <option value="" defaultValue="">
               Sort by Name
             </option>
@@ -157,7 +162,7 @@ function orderByMinWeight(event) {
           <select
             name="select_filter_temperament"
             onChange={(event) => filterByTemperament(event)}
-          >
+            >
             <option value="" defaultValue="">
               Temperament Filter
             </option>
@@ -175,7 +180,7 @@ function orderByMinWeight(event) {
           <select
             name="select_filter_apibd"
             onChange={(event) => filterByApiBd(event)}
-          >
+            >
             <option value="" defaultValue="">
               Api/BD Filter
             </option>
@@ -196,18 +201,18 @@ function orderByMinWeight(event) {
                 min_weight={breed.min_weight}
                 max_weight={breed.max_weight}
                 temperament={breed.temperament}
-              />
+                />
             </div>
           ))
-        ) : (
-          <Loading />
-        )}
+          ) : (
+            <Loading />
+            )}
 
         <div>Pag {currentPage}</div>
         <footer>
           {currentPage !== 1 ? (
             <button onClick={prevHandler}>Previous</button>
-          ) : null}
+            ) : null}
           {pageNumbers.map((number) => (
             <button key={number} onClick={() => Page(number)}>
               {number}
@@ -215,9 +220,10 @@ function orderByMinWeight(event) {
           ))}
           {currentPage !== pageNumbers.length ? (
             <button onClick={nextHandler}>Next</button>
-          ) : null}
+            ) : null}
         </footer>
       </div>
-    </div>
+    </div>}
+  </>
   );
 }
