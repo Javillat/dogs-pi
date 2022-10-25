@@ -1,19 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SearchBar from "../searchbar/SearchBar";
-//import Order from "../filters/Order";
+import "./Nav.css";
 
 export default function Nav({ setCurrentPage }) {
   return (
     <nav className="nav">
-      <SearchBar setCurrentPage={setCurrentPage} />
       <div className="create_button">
-        <Link to="/create">
-          <button>Create Breed</button>
-        </Link>
-        <Link to="/favorites">
-          <button>Favorites</button>
-        </Link>
+        <ul>
+          <div>
+            <Link to="/create">
+              <li>Create breed</li>
+            </Link>
+            <Link to="/favorites">
+              <li>Favorites</li>
+            </Link>
+          </div>
+        </ul>
+        <div className="search_container">
+          <SearchBar setCurrentPage={setCurrentPage} />
+        </div>
       </div>
       {/* <Order setCurrentPage={setCurrentPage} /> */}
     </nav>
