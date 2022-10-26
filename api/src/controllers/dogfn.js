@@ -123,13 +123,14 @@ dogById = async (req, res) => {
     } else {
       const getapi = (await axios.get("https://api.thedogapi.com/v1/breeds"))
         .data;
-      //console.log(getapi);
+      console.log(getapi);
       //console.log('params ',id);
       const gotdata = getapi.filter(
         (filtered) => parseInt(filtered.id) === parseInt(id)
       );
       const { name, image, height, weight, origin, life_span, temperament } =
         gotdata[0];
+        //console.log('ori',name);
       //console.log(gotdata);
       const heightminmax = height.metric.split(" - ");
       const weightminmax = weight.metric.split(" - ");
@@ -142,7 +143,7 @@ dogById = async (req, res) => {
         max_height: heightminmax[1],
         min_weight: weightminmax[0],
         max_weight: weightminmax[1],
-        origin: origin,
+        origin: origin ? origin : "Whitout origin",
         min_life_span: lifespan[0],
         max_life_span: lifespan[1],
         temperament: temperament,
