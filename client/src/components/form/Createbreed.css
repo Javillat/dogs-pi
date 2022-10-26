@@ -143,6 +143,12 @@ label{
     background-color: #008CBA;
     color: white;
 }
+
+.submit:disabled{
+    background-color: #808080;
+    color: #5d5959;
+    cursor: not-allowed;
+}
 /* .error,
 .input_text,
 .input_number {
