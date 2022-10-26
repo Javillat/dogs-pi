@@ -15,18 +15,14 @@ export default function Detail() {
   const [isLoading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
-    let disp = dispatch(getDetail(id)); //LIMPIAR EL STATE
-    console.log('disp', disp);
-    //dispatch(getClean())
-    setLoading(false);
+    dispatch(getDetail(id));
+    //setLoading(false);
     return () => {
-        dispatch(getClean());
-    }
+      dispatch(getClean()); //LIMPIAR EL STATE
+    };
   }, []);
 
-  // useEffect(() => {
-  //     return () => {};
-  // },[])
+  //if(detail.length > 0) {setLoading(false)};
 
   const backHandler = (event) => {
     history.push("/home");
@@ -34,10 +30,9 @@ export default function Detail() {
 
   //   return detail !== undefined ? (
   return (
-    <>
-      {isLoading ? (
-        <Loading />
-      ) : (
+      (detail !== undefined) ? 
+      //(isLoading) ? (<Loading />) :
+    (//<>
         <div>
           <span>
             <button className="buttond button_detail" onClick={backHandler}>
@@ -94,11 +89,8 @@ export default function Detail() {
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </>
+        </div> 
+        //</>
+       ) : (<Loading />)
   );
-  //   ) : (
-  //     <Loading />
-  //   );
 }
