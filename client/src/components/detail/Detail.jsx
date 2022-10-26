@@ -32,7 +32,7 @@ export default function Detail() {
   return detail !== undefined ? (
     <>
       <span>
-        <button onClick={backHandler}>Go Back</button>
+        <button className="buttond button_detail" onClick={backHandler}>Go Back</button>
       </span>
       <div className="detail_container">
         <div className="image_container">
@@ -44,7 +44,9 @@ export default function Detail() {
             <h4>{detail.id}</h4>
           </div>
           <div className="name_detail">
-            <h3>Name<h4>{detail.name}</h4></h3>   
+            <h3>
+              Name<h4>{detail.name}</h4>
+            </h3>
           </div>
           <div className="height_detail">
             <h3>
@@ -63,7 +65,9 @@ export default function Detail() {
             </h3>
           </div>
           <div className="origin_detail">
-            <h3>Origin<h4>{detail.origin}</h4></h3>
+            <h3>
+              Origin<h4>{detail.origin}</h4>
+            </h3>
           </div>
           <div className="lifespan_detail">
             <h3>
@@ -74,8 +78,9 @@ export default function Detail() {
             </h3>
           </div>
           <div className="temperaments_detail">
-            <h3>Temperaments<h4>{detail.temperament}</h4></h3>
-            
+            <h3>
+              Temperaments<h4>{detail.temperament}</h4>
+            </h3>
           </div>
         </div>
       </div>

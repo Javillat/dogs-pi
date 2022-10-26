@@ -85,5 +85,34 @@
 .temperaments_detail h4{
     background-color: rgb(135, 66, 170);
 }
-/* ===============ORIGIN================ */
+/* ===============BUTTON================ */
+.button_detail{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.buttond {
+    background-color: white; 
+    color: black; 
+    border-radius: 5px;
+    border: 2px solid #4CAF50;
+}
+
+.buttond:hover {
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+}
+
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
