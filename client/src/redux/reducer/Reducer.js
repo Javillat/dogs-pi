@@ -38,7 +38,7 @@ function Reducer(state = initialState, action) {
     case GET_CLEAN_DETAIL:
       return {
         ...state,
-        detail: action.payload,
+        detail: {},
       };
 
     case GET_BREEDS_NAME:

@@ -8,7 +8,7 @@ export const ORDER_BY_MIN_WEIGHT = 'ORDER_BY_MIN_WEIGHT';
 export const ORDER_BY_MAX_WEIGHT = 'ORDER_BY_MAX_WEIGHT';
 export const FILTER_BY_TEMPERAMENT = 'FILTER_BY_TEMPERAMENT';
 export const FILTER_BY_API_BD = 'FILTER_BY_API_BD';
-export const GET_CLEAN_DETAIL = 'GET_CLEAN_STATE';
+export const GET_CLEAN_DETAIL = 'GET_CLEAN_DETAIL';
 export const ADD_FAVORITES = 'ADD_FAVORITES';
 export const REMOVE_FAVORITES = 'REMOVE_FAVORITES';
 
@@ -43,10 +43,9 @@ export function getBreedsByName(breedname){
     }
 }
 
-export function getClean({}){
+export function getClean(){
     return {
         type: 'GET_CLEAN_DETAIL',
-        payload:{}
     }
 }
 
