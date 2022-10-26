@@ -1,0 +1,89 @@
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+/* =================================== */
+.detail_container {
+    width: 700px;
+    height: 500px;
+    background-color: rgb(238, 238, 245);
+    display: flex;
+    justify-content: space-around;
+    border-radius: 15px;
+}
+
+/* =================================== */
+.image_container {
+    margin: 10px;
+    padding: 5px;
+    width: 400px;
+    height: 400px;
+}
+
+.image_container img {
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+/* =================================== */
+.content_details {
+    background-color: darkslategray;
+    border: 2px;
+    border-color: rgb(241, 124, 124);
+}
+
+/* ===============ID=============== */
+.id_detail {
+    display: flex;
+}
+
+.id_detail h3 {
+    margin: 10px 0 10px 10px;
+    padding: 3px;
+    background-color: cadetblue;
+}
+
+.id_detail h4 {
+    margin: 10px 10px 10px 0;
+    padding: 3px;
+    background-color: blue;
+}
+
+/* ============NAME,HEIGHT,WEIGHT,ORIGIN,LIFESPAN, =============== */
+.name_detail,
+.height_detail,
+.weight_detail,
+.origin_detail,
+.lifespan_detail,
+.temperaments_detail {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+/* ===============NAME================ */
+.name_detail h4{
+    background-color: #fff;
+}
+/* ===============HEIGHT================ */
+.height_detail h4 {
+    background-color: brown;
+}
+
+/* ===============WEIGHT================ */
+.weight_detail h4 {
+    background-color: darkcyan;
+}
+
+/* ===============ORIGIN================ */
+
+.origin_detail h4 {
+    background-color: goldenrod;
+}
+
+/* ===============LIFESPAN================ */
+.lifespan_detail h4{
+    background-color: aqua;
+}
+/* ===============ORIGIN================ */
+.temperaments_detail h4{
+    background-color: rgb(135, 66, 170);
+}
+/* ===============ORIGIN================ */
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
