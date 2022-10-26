@@ -128,7 +128,7 @@ dogById = async (req, res) => {
       const gotdata = getapi.filter(
         (filtered) => parseInt(filtered.id) === parseInt(id)
       );
-      const { name, image, height, weight, life_span, temperament } =
+      const { name, image, height, weight, origin, life_span, temperament } =
         gotdata[0];
       //console.log(gotdata);
       const heightminmax = height.metric.split(" - ");
@@ -142,6 +142,7 @@ dogById = async (req, res) => {
         max_height: heightminmax[1],
         min_weight: weightminmax[0],
         max_weight: weightminmax[1],
+        origin: origin,
         min_life_span: lifespan[0],
         max_life_span: lifespan[1],
         temperament: temperament,
