@@ -1,9 +1,9 @@
 .filters_orders{
-    background-color: #142b47;
+    background-color: #f9fafc;
     display: flex;
+    justify-content: space-around;
     /* overflow: auto; */
     /* display: block; */
-    justify-content: space-around;
 }/*
 .order_weight_max_section{
     float:left ;
@@ -12,7 +12,7 @@
     float: left;
 }
 .order_name_section{
-    float: none;
+    float: right;
 }
 .select_filter_temperaments{
     float: right;

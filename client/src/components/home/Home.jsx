@@ -12,7 +12,7 @@ import {
   filterByApiBdAction,
 } from "../../redux/actions/Actions";
 import axios from "axios";
-import "./Home.css"
+import "./Home.css";
 
 export default function Home() {
   const [isLoading, setLoading] = useState(false);
@@ -121,7 +121,7 @@ export default function Home() {
                 onChange={(event) => orderByMaxWeight(event)}
               >
                 <option value="" defaultValue="">
-                  SORT BY MAX WEIGHT
+                  Max Weight Sort
                 </option>
                 <option value="asc">Ascendent order</option>
                 <option value="desc">Descendent order</option>
@@ -136,7 +136,7 @@ export default function Home() {
                 onChange={(event) => orderByMinWeight(event)}
               >
                 <option value="" defaultValue="">
-                  SORT BY MIN WEIGHT
+                  Min Weight Sort
                 </option>
                 <option value="asc">Ascendent order</option>
                 <option value="desc">Descendent order</option>
