@@ -9,7 +9,7 @@ const dog = {
   name: "Pug",
 };
 
-describe("Dogs routes", () => {
+describe("Dog rutas", () => {
   before(() =>
     conn.authenticate().catch((err) => {
       console.error("Unable to connect to the database:", err);
@@ -18,7 +18,7 @@ describe("Dogs routes", () => {
   beforeEach(() =>
     Dog.sync({ force: true }).then(() =>
       Dog.create({
-        id:"BD-12",
+        id: "BD-30",
         name: "Brida",
         minheight: 2,
         maxheight: 5,
@@ -28,6 +28,21 @@ describe("Dogs routes", () => {
     )
   );
   describe("GET /dogs", () => {
-    it("should get 200", () => agent.get("/dogs").expect(200));
+    it("Debe devolver 200", () => agent.get("/dogs").expect(200));
+  });
+
+  describe("POST /dogs", async () => {
+    const objeto = {
+      tempid: [4,10,5],
+      name: "Doggy",
+      minheight: 22,
+      maxheight: 55,
+      minweight: 4,
+      maxweight: 7,
+      image:"",
+      origin:"Salvadorean",
+      life_span:40
+    };
+    await it("Agregar datos a la bd y devolver 201",()=> agent.post("/dogs").send(objeto).expect(201));
   });
 });
