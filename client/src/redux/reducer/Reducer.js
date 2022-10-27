@@ -10,6 +10,7 @@ import {
   FILTER_BY_API_BD,
   ADD_FAVORITES,
   REMOVE_FAVORITES,
+  ORDER_BY_PEQUE,
 } from "../actions/Actions";
 
 const initialState = {
@@ -106,6 +107,19 @@ function Reducer(state = initialState, action) {
         ...state,
         breeds: ordermaxweight,
       };
+
+      case ORDER_BY_PEQUE:
+        const ordenarp = action.payload = "peque"
+        ? state.breedsfilter.sort((a,b) => {
+          return a.min_weight - b.min_weight; 
+        })
+        : state.breedsfilter.sort((a,b) => {
+          return b.min_weight - a.min_weight;
+        })
+        return{
+          ...state,
+          breeds: ordenarp.slice(0,16),
+        };
 
     case FILTER_BY_TEMPERAMENT:
       const value = action.payload;
