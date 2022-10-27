@@ -27,8 +27,8 @@ describe("Dog rutas", () => {
       })
     )
   );
-  describe("GET /dogs", () => {
-    it("Debe devolver 200", () => agent.get("/dogs").expect(200));
+  describe("GET /dogs", async () => {
+   await it("Debe devolver 200", () => agent.get("/dogs").expect(200));
   });
 
   describe("POST /dogs", async () => {
