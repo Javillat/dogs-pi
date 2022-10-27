@@ -19,6 +19,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const breeds = useSelector((data) => data.breeds);
   //Paginación
+  
   const [currentPage, setCurrentPage] = useState(1);
   const cardpage = 8;
   const lastbreed = currentPage * cardpage;
@@ -210,18 +211,18 @@ export default function Home() {
               <Loading />
             )}
 
-            <div>Pag {currentPage}</div>
             <footer>
+            <div className="leyenda">Pag {currentPage}</div>
               {currentPage !== 1 ? (
-                <button onClick={prevHandler}>Previous</button>
+                <button className="prev" onClick={prevHandler}>Previous</button>
               ) : null}
               {pageNumbers.map((number) => (
-                <button key={number} onClick={() => Page(number)}>
+                <button className={currentPage && "pagination_button"}  key={number} onClick={() => Page(number)}>
                   {number}
                 </button>
               ))}
               {currentPage !== pageNumbers.length ? (
-                <button onClick={nextHandler}>Next</button>
+                <button className="next" onClick={nextHandler}>Next</button>
               ) : null}
             </footer>
           </div>

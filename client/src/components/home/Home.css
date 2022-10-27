@@ -1,22 +1,66 @@
-.filters_orders{
+.filters_orders {
     background-color: #f9fafc;
     display: flex;
     justify-content: space-around;
     /* overflow: auto; */
     /* display: block; */
-}/*
-.order_weight_max_section{
-    float:left ;
 }
-.order_weight_min_section{
-    float: left;
+
+.pagination_button {
+    text-decoration: none;
+    margin: 1px;
+    width: 25px;
+    border-radius: 5px;
+    border-color: rgb(217, 97, 97);
 }
-.order_name_section{
-    float: right;
+
+.pagination_button {
+    cursor: pointer;
+    border: 1px solid transparent;
+    text-align: center;
+    background-color: rgb(42, 83, 217);
+    color: #fff;
 }
-.select_filter_temperaments{
-    float: right;
+
+.prev {
+    width: auto;
+    margin: 1px;
+    background-color: #fff;
+    border-color: blue;
+    color: blue;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
-.select_filter_api_bd{
-    float: right;
-} */
+
+.next {
+    width: auto;
+    margin: 1px;
+    background-color: #fff;
+    border-color: blue;
+    color: blue;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.leyenda{
+    color: bisque;
+    
+}
+
+.pagination_button:active{
+    background-color: #f9fafc;
+    color: black;
+}
+.pagination_button:hover{
+    background-color: #fff;
+    color: blue;
+}
+
+/*.pagination_button a:hover:not(.active){
+    background-color: #ddd;
+}*/
+.pagination_button:focus{
+    background-color: rgb(139, 212, 146);
+    color: black;
+    
+} 
