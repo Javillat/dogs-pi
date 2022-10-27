@@ -10,6 +10,7 @@ import {
   orderByMaxWeightAction,
   filterByTemperamentAction,
   filterByApiBdAction,
+  orderByPequeAction,
 } from "../../redux/actions/Actions";
 import axios from "axios";
 import "./Home.css";
@@ -93,6 +94,12 @@ export default function Home() {
     //setCurrentPage(1);
     setOrden(event.target.value);
   }
+
+  function orderByPeque(event){
+    event.preventDefault();
+    dispatch(orderByPequeAction(event.target.value));
+    setOrden(event.target.value);
+  }
   //+++++++++++++++++++++++++++++++++++++++++++++
 
   function filterByTemperament(event) {
@@ -143,8 +150,21 @@ export default function Home() {
                 <option value="desc">Descendent order</option>
               </select>
             </section>
-
+            
             {/* ===================================================== */}
+
+            <section className="peque">
+              <select
+                name="order_peque"
+                onChange={(event) => orderByPeque(event)}
+              >
+                <option value="" defaultValue="">
+                  Peque
+                </option>
+                <option value="peque">Peque</option>
+              </select>
+            </section>
+            
 
             <section className="order_name_section">
               <select
