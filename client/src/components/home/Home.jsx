@@ -232,12 +232,13 @@ export default function Home() {
             )}
 
             <footer>
-            <div className="leyenda">Pag {currentPage}</div>
+            {/* <div className="leyenda">Pag {currentPage}</div> */}
               {currentPage !== 1 ? (
                 <button className="prev" onClick={prevHandler}>Previous</button>
               ) : null}
               {pageNumbers.map((number) => (
-                <button className={currentPage && "pagination_button"}  key={number} onClick={() => Page(number)}>
+                // <button className={currentPage && "pagination_button"}  key={number} onClick={() => Page(number)}>
+                <button className={currentPage === number ? "pagination_button active" : "pagination_button"}  key={number} onClick={() => Page(number)}>
                   {number}
                 </button>
               ))}
