@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./Createbreed.css";
+import { URL } from "../../config";
 
 export default function CreateBreed() {
   const [temperaments, setTemperaments] = useState([]);
@@ -22,7 +23,8 @@ export default function CreateBreed() {
   const nameInput = useRef(null); //Setear nameInput useRef al name
 
   useEffect(() => {
-    axios.get("http://localhost:3001/temperaments").then((response) => {
+    axios.get(`${URL}/temperaments`).then((response) => {
+    //axios.get("http://localhost:3001/temperaments").then((response) => {
       setTemperaments(response.data);
       //console.log("useeffect", temperaments);
     });
@@ -215,7 +217,8 @@ export default function CreateBreed() {
 
   const submitBreed = (event) => {
     event.preventDefault();
-    axios.post("http://localhost:3001/dogs", input);
+    axios.post(`${URL}/dogs`, input);
+    //axios.post("http://localhost:3001/dogs", input);
     setTimeout(()=>{
         alert("Breed succefull created!!!")
            if (!window.confirm("Add new breed?")){
