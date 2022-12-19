@@ -48,10 +48,6 @@
     
 }
 
-/* .pagination_button:active{
-    background-color: #f9fafc;
-    color: black;
-} */
 .pagination_button.active{
     background-color: #0000ff;
     color: white;
@@ -62,14 +58,7 @@
     color: #fff;
 }
 
-.pagination_button:hover:not(.active){
+/* .pagination_button:hover:not(.active){
     background-color: #4509dc;
-    color: rgb(187, 180, 180);
-}
-
-
-/* .pagination_button:focus{
-    background-color: rgb(139, 212, 146);
-    color: black;
-    
-}  */
+    color: #fff;
+} */
