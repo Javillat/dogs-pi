@@ -232,8 +232,8 @@ export default function Home() {
             ) : (
               <Loading />
             )}
-
-            <footer>
+          </div>
+          <footer>
             {/* <div className="leyenda">Pag {currentPage}</div> */}
               {currentPage !== 1 ? (
                 <button className="prev" onClick={prevHandler}>Previous</button>
@@ -248,8 +248,7 @@ export default function Home() {
                 <button className="next" onClick={nextHandler}>Next</button>
               ) : null}
             </footer>
-          </div>
-        </div>
+        </div>//Super_container
       )}
     </>
   );
