@@ -1,7 +1,7 @@
 const axios = require("axios");
 const { Dog, Temperament } = require("../db");
 const { Op } = require("sequelize");
-const { KEY } = process.env;
+const { KEY, DOGAPI_KEY } = process.env;
 
 /**
  * OBTENER DATA PARA RUTA PRINCIPAL.
@@ -17,10 +17,12 @@ getDogs = async (req, res) => {
     const getapi = await axios.get(`https://api.thedogapi.com/v1/breeds`);
     const mapapi = getapi.data.map((item) => {
       const weightminmax = item.weight.metric.split(" - ");
+      //const imageurl = await axios.get(`https://api.thedogapi.com/v1/images/${item.reference_image_id}`);
       return {
         id: item.id,
         name: item.name,
-        image: item.image.url,
+        // image: imageurl,
+        image: item.reference_image_id,
         min_weight: weightminmax[0],
         max_weight: weightminmax[1],
         temperament: item.temperament,
