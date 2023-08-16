@@ -14,6 +14,8 @@ const { KEY, DOGAPI_KEY } = process.env;
 
 getDogs = async (req, res) => {
   try {
+    const getimageapi = await axios.get(`https://api.thedogapi.com/v1/images/search?limit=300&api_key=live_wc4TK5ddDLtQktUPNS4SyHYlzx2JPDBqu0ashjCJZgpS2gyPdjBeuTFwE9oTqxa4`);
+    console.log(getimageapi);
     const getapi = await axios.get(`https://api.thedogapi.com/v1/breeds`);
     const mapapi = getapi.data.map((item) => {
       const weightminmax = item.weight.metric.split(" - ");
