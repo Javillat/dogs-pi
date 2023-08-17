@@ -41,6 +41,7 @@ getDogs = async (req, res) => {
             id:  item.breeds[0].id,
             name: item.breeds[0].name,
             image: item.url,
+            idimg: item.id,
             temperament: item.breeds[0].temperament,
             min_weight: weightminmax[0],
             max_weight: weightminmax[1]
@@ -191,34 +192,28 @@ dogById = async (req, res) => {
     if (getbd) {
       return res.status(200).send(getbd);
     } else {
-      const getapi = (await axios.get("https://api.thedogapi.com/v1/breeds"))
-        .data;
-      console.log(getapi);
-      //console.log('params ',id);
-      const gotdata = getapi.filter(
-        (filtered) => parseInt(filtered.id) === parseInt(id)
-      );
-      const { name, image, height, weight, origin, life_span, temperament } =
-        gotdata[0];
-      //console.log('ori',name);
-      //console.log(gotdata);
-      const heightminmax = height.metric.split(" - ");
-      const weightminmax = weight.metric.split(" - ");
-      const lifespan = life_span.slice(0, 7).split(" - ");
+      // const getapi = (await axios.get("https://api.thedogapi.com/v1/breeds"))
+      let getapi = await axios.get(`https://api.thedogapi.com/v1/images/${id}`);
+      //console.log(getapi);
+    
+      const weightminmax = getapi.data.breeds[0].weight.metric.split(" - ");
+      const heightminmax = getapi.data.breeds[0].height.metric.split(" - ");
+      const lifespan = getapi.data.breeds[0].life_span.slice(0, 7).split(" - ");
+
       const serveddata = {
-        id: id,
-        name: name,
-        image: image.url,
-        min_height: heightminmax[0],
-        max_height: heightminmax[1],
+        id: getapi.data.id,
+        image: getapi.data.url,
+        name: getapi.data.breeds[0].name,
+        temperament: getapi.data.breeds[0].temperament,
         min_weight: weightminmax[0],
         max_weight: weightminmax[1],
-        origin: origin ? origin : "Whitout origin",
+        min_height: heightminmax[0],
+        max_height: heightminmax[1],
         min_life_span: lifespan[0],
         max_life_span: lifespan[1],
-        temperament: temperament,
+        origin: getapi.data.origin ? getapi.data.origin : "Whitout origin",
       };
-      //console.log(gotdata[0]);
+
       res.status(200).send(serveddata);
     }
   } catch (error) {
