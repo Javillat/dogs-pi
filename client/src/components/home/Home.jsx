@@ -220,7 +220,7 @@ export default function Home() {
               currentBreeds.map((breed) => (
                 <div key={breed.id}>
                   <Card
-                    id={breed.id}
+                    id={breed.idimg}
                     name={breed.name}
                     image={breed.image}
                     min_weight={breed.min_weight}
