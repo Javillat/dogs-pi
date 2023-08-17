@@ -1,1 +1,1 @@
-export const URL = "https://dogs.up.railway.app" || "http://localhost:3001";
+export const URL = "https://dogs-app-back.onrender.com" || "http://localhost:3001";
