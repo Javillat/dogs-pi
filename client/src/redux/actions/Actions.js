@@ -1,5 +1,6 @@
 import axios from "axios";
-import { URL } from "../../config";
+//import { URL } from "../../config";
+const { REACT_APP_URL } = process.env;
 
 export const GET_BREEDS = 'GET_BREEDS';
 export const GET_DETAIL = 'GET_DETAIL';
@@ -15,8 +16,9 @@ export const REMOVE_FAVORITES = 'REMOVE_FAVORITES';
 export const ORDER_BY_PEQUE = 'ORDER_BY_PEQUE';
 
 export function getBreeds(){
+    //console.log(URL);
     return async (dispatch) => {
-        const getData = await axios.get(`${URL}/dogs`);
+        const getData = await axios.get(`${REACT_APP_URL}/dogs`);
         //const getData = await axios.get('http://localhost:3001/dogs');
         dispatch({
             type: 'GET_BREEDS',
@@ -27,7 +29,7 @@ export function getBreeds(){
 
 export function getDetail(id){
     return async (dispatch) => {
-        const getData = await axios.get(`${URL}/dogs/${id}`);
+        const getData = await axios.get(`${REACT_APP_URL}/dogs/${id}`);
         //const getData = await axios.get(`http://localhost:3001/dogs/${id}`);
         dispatch({
             type: 'GET_DETAIL',
@@ -38,7 +40,7 @@ export function getDetail(id){
 
 export function getBreedsByName(breedname){
     return async (dispatch) => {
-        const getData = await axios.get(`${URL}/dogs?name=${breedname}`);
+        const getData = await axios.get(`${REACT_APP_URL}/dogs?name=${breedname}`);
         //const getData = await axios.get(`http://localhost:3001/dogs?name=${breedname}`);
         dispatch({
             type: 'GET_BREEDS_NAME',
