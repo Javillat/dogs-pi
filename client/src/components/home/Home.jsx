@@ -14,7 +14,8 @@ import {
 } from "../../redux/actions/Actions";
 import axios from "axios";
 import "./Home.css";
-import { URL } from "../../config";
+//import { URL } from "../../config";
+const { REACT_APP_URL } = process.env;
 
 export default function Home() {
   const [isLoading, setLoading] = useState(false);
@@ -57,7 +58,7 @@ export default function Home() {
   useEffect(() => {
     setLoading(true);
     dispatch(getBreeds());
-    axios.get(`${URL}/temperaments`).then((response) => {
+    axios.get(`${REACT_APP_URL}/temperaments`).then((response) => {
     //axios.get("http://localhost:3001/temperaments").then((response) => {
       setTemperaments(response.data);
       setLoading(false);
