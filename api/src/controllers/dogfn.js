@@ -14,42 +14,43 @@ const { KEY, DOGAPI_KEY } = process.env;
 
 getDogs = async (req, res) => {
   try {
+    let arrayapi = [];
     //https://api.thedogapi.com/v1/images/search?limit=100&page=0&has_breeds=1&api_key=live_wc4TK5ddDLtQktUPNS4SyHYlzx2JPDBqu0ashjCJZgpS2gyPdjBeuTFwE9oTqxa4
-    const URLDOG = 'https://api.thedogapi.com/v1/images/search';
-    const getimageapi = await axios.get(URLDOG, { 
-      headers: { 
-        'x-api-key': DOGAPI_KEY 
-      },
-      params: {
-        limit: 100,
-        page: 0,
-        has_breeds : true
-      }
-    });
-    //console.log(getimageapi);
-    //const getapi = await axios.get(`https://api.thedogapi.com/v1/breeds`);
-    const mapapi = await Promise.all(getimageapi.data.map(async (item) => {
-      const breedsitem = await Promise.all(item.breeds.map(async (breed) => {
-        const weightminmax = breed.weight.metric.split(" - ");
-        return {
-          id: breed.id,
-          name: breed.name,
-          temperament: breed.temperament,
-          min_weight: weightminmax[0],
-          max_weight: weightminmax[1],
+    for(let i = 0; i <= 6; i++){
+      const URLDOG = 'https://api.thedogapi.com/v1/images/search';
+      const getimageapi = await axios.get(URLDOG, { 
+        headers: { 
+          'x-api-key': DOGAPI_KEY 
+        },
+        params: {
+          limit: 100,
+          page: i,
+          has_breeds : true,
+          order : 'ASC'
         }
-      }))
-      //const imageurl = await axios.get(`https://api.thedogapi.com/v1/images/${item.reference_image_id}`);
-      console.log(breedsitem);
-      return {
-        id: breedsitem.id,
-        name: breedsitem.name,
-        image: item.url,
-        temperament: breedsitem.temperament,
-        min_weight: breedsitem.min_weight,
-        max_weight: breedsitem.max_weight,
-      };
-    }));
+      });
+      //console.log(getimageapi);
+      //const getapi = await axios.get(`https://api.thedogapi.com/v1/breeds`);
+      const mapapi = await Promise.all(getimageapi.data.map((item) => {
+        // const breedsitem = await Promise.all(item.breeds.map(async (breed) => {
+          const weightminmax = item.breeds[0].weight.metric.split(" - ");
+          //console.log(breedsitem);
+          // const breedsitemflated = breedsitem.flat();
+          //console.log(item.breeds);
+          return {
+            id:  item.breeds[0].id,
+            name: item.breeds[0].name,
+            image: item.url,
+            temperament: item.breeds[0].temperament,
+            min_weight: weightminmax[0],
+            max_weight: weightminmax[1]
+          };
+        }));
+        arrayapi.push(...mapapi)
+        console.log(`${i}° Pagina,`, mapapi.length, 'Registros');//Para ver el progreso del fetch
+
+      }//Fin bucle for
+
     const getbd = await Dog.findAll({
       include: {
         model: Temperament,
@@ -67,9 +68,9 @@ getDogs = async (req, res) => {
         temperament: item.temperaments.map(temperament => temperament.name).join(', '),
       }
     })
-    //console.log('Mappedbd', mapbd);
-    //console.log(mapapi);
-    return [...mapapi, ...mapbd];
+    
+    filtermapapi = arrayapi.filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i);
+    return [...filtermapapi, ...mapbd];
     //return res.send(mapapi);
   } catch (error) {
     console.log(error);
