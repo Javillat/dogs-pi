@@ -14,22 +14,42 @@ const { KEY, DOGAPI_KEY } = process.env;
 
 getDogs = async (req, res) => {
   try {
-    const getimageapi = await axios.get(`https://api.thedogapi.com/v1/images/search?limit=300&api_key=live_wc4TK5ddDLtQktUPNS4SyHYlzx2JPDBqu0ashjCJZgpS2gyPdjBeuTFwE9oTqxa4`);
-    console.log(getimageapi);
-    const getapi = await axios.get(`https://api.thedogapi.com/v1/breeds`);
-    const mapapi = getapi.data.map((item) => {
-      const weightminmax = item.weight.metric.split(" - ");
-      //const imageurl = await axios.get(`https://api.thedogapi.com/v1/images/${item.reference_image_id}`);
-      return {
-        id: item.id,
-        name: item.name,
-        // image: imageurl,
-        image: item.reference_image_id,
-        min_weight: weightminmax[0],
-        max_weight: weightminmax[1],
-        temperament: item.temperament,
-      };
+    //https://api.thedogapi.com/v1/images/search?limit=100&page=0&has_breeds=1&api_key=live_wc4TK5ddDLtQktUPNS4SyHYlzx2JPDBqu0ashjCJZgpS2gyPdjBeuTFwE9oTqxa4
+    const URLDOG = 'https://api.thedogapi.com/v1/images/search';
+    const getimageapi = await axios.get(URLDOG, { 
+      headers: { 
+        'x-api-key': DOGAPI_KEY 
+      },
+      params: {
+        limit: 100,
+        page: 0,
+        has_breeds : true
+      }
     });
+    //console.log(getimageapi);
+    //const getapi = await axios.get(`https://api.thedogapi.com/v1/breeds`);
+    const mapapi = await Promise.all(getimageapi.data.map(async (item) => {
+      const breedsitem = await Promise.all(item.breeds.map(async (breed) => {
+        const weightminmax = breed.weight.metric.split(" - ");
+        return {
+          id: breed.id,
+          name: breed.name,
+          temperament: breed.temperament,
+          min_weight: weightminmax[0],
+          max_weight: weightminmax[1],
+        }
+      }))
+      //const imageurl = await axios.get(`https://api.thedogapi.com/v1/images/${item.reference_image_id}`);
+      console.log(breedsitem);
+      return {
+        id: breedsitem.id,
+        name: breedsitem.name,
+        image: item.url,
+        temperament: breedsitem.temperament,
+        min_weight: breedsitem.min_weight,
+        max_weight: breedsitem.max_weight,
+      };
+    }));
     const getbd = await Dog.findAll({
       include: {
         model: Temperament,
@@ -39,22 +59,67 @@ getDogs = async (req, res) => {
     }); //Traer los temperamentos
     const mapbd = getbd.map((item) => {//Mapear los items de la bd, para enviar como string los temperamentos
       return {
-        id:item.id,
-        name:item.name,
-        image:item.image,
-        min_weight:item.minweight,
-        max_weight:item.maxweight,
-        temperament:item.temperaments.map(temperament => temperament.name).join(', '),
+        id: item.id,
+        name: item.name,
+        image: item.image,
+        min_weight: item.minweight,
+        max_weight: item.maxweight,
+        temperament: item.temperaments.map(temperament => temperament.name).join(', '),
       }
     })
-    console.log('Mappedbd', mapbd);
+    //console.log('Mappedbd', mapbd);
     //console.log(mapapi);
     return [...mapapi, ...mapbd];
     //return res.send(mapapi);
   } catch (error) {
     console.log(error);
   }
-};
+}
+
+// getDogs = async (req, res) => {
+//   try {
+//     //https://api.thedogapi.com/v1/images/search?limit=100&page=0&has_breeds=1&api_key=live_wc4TK5ddDLtQktUPNS4SyHYlzx2JPDBqu0ashjCJZgpS2gyPdjBeuTFwE9oTqxa4
+//     const getimageapi = await axios.get(`https://api.thedogapi.com/v1/images/search?limit=100&page=0&has_breeds=1&api_key=${DOGAPI_KEY}`);
+//     console.log(getimageapi);
+//     const getapi = await axios.get(`https://api.thedogapi.com/v1/breeds`);
+//     const mapapi = getapi.data.map((item) => {
+//       const weightminmax = item.weight.metric.split(" - ");
+//       //const imageurl = await axios.get(`https://api.thedogapi.com/v1/images/${item.reference_image_id}`);
+//       return {
+//         id: item.id,
+//         name: item.name,
+//         // image: imageurl,
+//         image: item.reference_image_id,
+//         min_weight: weightminmax[0],
+//         max_weight: weightminmax[1],
+//         temperament: item.temperament,
+//       };
+//     });
+//     const getbd = await Dog.findAll({
+//       include: {
+//         model: Temperament,
+//         attributes: ["name"],
+//         through: { attributes: [] },
+//       },
+//     }); //Traer los temperamentos
+//     const mapbd = getbd.map((item) => {//Mapear los items de la bd, para enviar como string los temperamentos
+//       return {
+//         id:item.id,
+//         name:item.name,
+//         image:item.image,
+//         min_weight:item.minweight,
+//         max_weight:item.maxweight,
+//         temperament:item.temperaments.map(temperament => temperament.name).join(', '),
+//       }
+//     })
+//     console.log('Mappedbd', mapbd);
+//     //console.log(mapapi);
+//     return [...mapapi, ...mapbd];
+//     //return res.send(mapapi);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 //======================================================
 
 /**
@@ -134,7 +199,7 @@ dogById = async (req, res) => {
       );
       const { name, image, height, weight, origin, life_span, temperament } =
         gotdata[0];
-        //console.log('ori',name);
+      //console.log('ori',name);
       //console.log(gotdata);
       const heightminmax = height.metric.split(" - ");
       const weightminmax = weight.metric.split(" - ");
@@ -180,30 +245,30 @@ dogById = async (req, res) => {
  * READY
  */
 
-breedPost = async(req, res) => {
+breedPost = async (req, res) => {
   const { name, minheight, maxheight, minweight, maxweight, image, origin, life_span, tempid } = req.body;
   try {
     const findone = await Dog.findOne({
-      where:{name:{[Op.eq]:name}}
+      where: { name: { [Op.eq]: name } }
     });
-    if(!findone){
+    if (!findone) {
       const idCount = (await Dog.count()) + 1;
       const idString = 'BD-' + idCount;
       const breed = await Dog.create({
-        id:idString,
-        name:name,
-        minheight:minheight,
-        maxheight:maxheight,
-        minweight:minweight,
-        maxweight:maxweight,
-        origin:origin,
-        life_span:life_span,
-        image:image || 'https://thumbs.dreamstime.com/z/group-twelve-dogs-24189584.jpg'
+        id: idString,
+        name: name,
+        minheight: minheight,
+        maxheight: maxheight,
+        minweight: minweight,
+        maxweight: maxweight,
+        origin: origin,
+        life_span: life_span,
+        image: image || 'https://thumbs.dreamstime.com/z/group-twelve-dogs-24189584.jpg'
       });
       //console.log('Proto ',breed.__proto__);
       await breed.addTemperaments(tempid);
-      return res.status(201).send('Breed succefull created'); 
-    }else{
+      return res.status(201).send('Breed succefull created');
+    } else {
       return res.status(304).json('Breed already exist into db, not modyfied');
     }
   } catch (error) {
