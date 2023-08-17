@@ -31,7 +31,8 @@ getDogs = async (req, res) => {
       });
       //console.log(getimageapi);
       //const getapi = await axios.get(`https://api.thedogapi.com/v1/breeds`);
-      const mapapi = await Promise.all(getimageapi.data.map((item) => {
+      // const mapapi = Promise.all(getimageapi.data.map((item) => {
+        const mapapi = await getimageapi.data.map((item) => {
         // const breedsitem = await Promise.all(item.breeds.map(async (breed) => {
           const weightminmax = item.breeds[0].weight.metric.split(" - ");
           //console.log(breedsitem);
@@ -46,7 +47,8 @@ getDogs = async (req, res) => {
             min_weight: weightminmax[0],
             max_weight: weightminmax[1]
           };
-        }));
+        });
+        // }));
         arrayapi.push(...mapapi)
         console.log(`${i}° Pagina,`, mapapi.length, 'Registros');//Para ver el progreso del fetch
 
