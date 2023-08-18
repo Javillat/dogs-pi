@@ -1,7 +1,9 @@
 .nav{
     background-color:#142b47;
-    overflow: auto;
-    width: 1520px;
+    overflow:hidden;
+    position: fixed;
+    top: 0;
+    min-width: 100vw;
 }
 
 .nav ul{
