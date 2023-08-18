@@ -2,8 +2,25 @@
     background-color: #f9fafc;
     display: flex;
     justify-content: space-around;
-    /* overflow: auto; */
+    position: fixed;
+    overflow: hidden;
+    padding: 5px;
+    top: 70px;
+    min-width: 100vw;
     /* display: block; */
+}
+
+.container {
+    min-height: 70vh;
+    /* height: 60vh; */
+}
+
+.footer {
+    right: 50%;
+    margin: 0 auto;
+    position: fixed;
+    min-height: 5vh;
+    bottom: 5px;
 }
 
 .pagination_button {
