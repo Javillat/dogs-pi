@@ -11,7 +11,7 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #c32148;
-  min-height: 800px;
+  min-height: 100vh;
 }
 
 /* GLOBAL */
@@ -43,29 +43,31 @@ body {
 }
 
 .card:hover {
-  height: 320px;
+  height: 300px;
 }
 
 .image {
   position: relative;
   width: 260px;
   height: 260px;
-  max-height: 260px;
+  /* max-height: 260px; */
   border-radius: 20px;
   top: -40%;
   left: 8px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
-
-img {
-  /* min-height: 100%;
+@supports(object-fit: cover){
+  .image img {
+    /* min-height: 100%;
     max-height: 260px;
     max-width : 100%; */
-  height: 100%;
-  width: 100%;
-  object-fit: contain;
-  border-radius: 20px;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center center;
+    border-radius: 20px;
+  }
 }
 
 .content {
