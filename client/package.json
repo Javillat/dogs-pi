@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^13.1.1",
+    "animate.css": "^4.1.1",
     "axios": "^1.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -15,13 +16,14 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
+    "sweetalert2": "^11.7.26",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject", 
+    "eject": "react-scripts eject",
     "testjest": "jest"
   },
   "eslintConfig": {
@@ -41,8 +43,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-  
   }
 }
