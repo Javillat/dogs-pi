@@ -216,7 +216,7 @@ export default function Home() {
             </section>
           </div>
 
-          <div className="container">
+          <div className="container_home">
             {breeds > 0 || breeds !== undefined ? (
               currentBreeds.map((breed) => (
                 <div key={breed.id}>

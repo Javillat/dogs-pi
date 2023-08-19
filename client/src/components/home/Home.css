@@ -10,9 +10,15 @@
     /* display: block; */
 }
 
-.container {
+.container_home {
     min-height: 70vh;
-    /* height: 60vh; */
+    min-width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap:.4rem;
+    padding: 125px 25px 0 25px;
 }
 
 .footer {
