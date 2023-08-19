@@ -4,14 +4,14 @@
     justify-content: space-around;
     position: fixed;
     overflow: hidden;
-    padding: 5px;
+    padding: 2px;
     top: 70px;
     min-width: 100vw;
     /* display: block; */
 }
 
 .container_home {
-    min-height: 70vh;
+    min-height: 90vh;
     min-width: 100vw;
     display: flex;
     align-items: center;
