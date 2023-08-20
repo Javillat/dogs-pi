@@ -1,14 +1,25 @@
 import React from "react";
+import Swal from 'sweetalert2'
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addFavorites } from "../../redux/actions/Actions";
 import "./Card.css";
+import 'animate.css';
 
 export default function Card(propsHome) {
   console.log(propsHome);
   const dispatch = useDispatch();
   const handleClick = (breed) =>{
     dispatch(addFavorites(breed))
+    Swal.fire({
+      title: 'Raza agregada a favoritos',
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+    })
   }
   return (
     <div className="card">
