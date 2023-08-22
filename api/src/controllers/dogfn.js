@@ -25,8 +25,8 @@ getDogs = async (req, res) => {
         params: {
           limit: 100,
           page: i,
-          has_breeds : true,
-          order : 'ASC'
+          has_breeds : true
+          //order : 'ASC'
         }
       });
       //console.log(getimageapi);
