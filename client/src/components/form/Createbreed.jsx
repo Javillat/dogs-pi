@@ -1,9 +1,13 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 import { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
+//import { URL } from "../../config";
 import "./Createbreed.css";
-import { URL } from "../../config";
+import 'animate.css';
+const { REACT_APP_URL } = process.env;
+
 
 export default function CreateBreed() {
   const [temperaments, setTemperaments] = useState([]);
@@ -23,8 +27,8 @@ export default function CreateBreed() {
   const nameInput = useRef(null); //Setear nameInput useRef al name
 
   useEffect(() => {
-    axios.get(`${URL}/temperaments`).then((response) => {
-    //axios.get("http://localhost:3001/temperaments").then((response) => {
+    axios.get(`${REACT_APP_URL}/temperaments`).then((response) => {
+      //axios.get("http://localhost:3001/temperaments").then((response) => {
       setTemperaments(response.data);
       //console.log("useeffect", temperaments);
     });
@@ -217,37 +221,90 @@ export default function CreateBreed() {
 
   const submitBreed = (event) => {
     event.preventDefault();
-    axios.post(`${URL}/dogs`, input);
+    axios.post(`${REACT_APP_URL}/dogs`, input);
     //axios.post("http://localhost:3001/dogs", input);
-    setTimeout(()=>{
-        alert("Breed succefull created!!!")
-           if (!window.confirm("Add new breed?")){
-               history.push("/home");
-           }else{
-            window.open("/create", "_self");
-           }
-    },1000)
+    setTimeout(() => {
+      Swal.fire({
+        title: 'Raza agregada correctamente a nuestra base de datos!',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        }
+      })
+      //  if (!window.confirm("Add new breed?")){
+      //      history.push("/home");
+      //  }else{
+      //   window.open("/create", "_self");
+      //  }
 
-    setInput({
-      tempid: [],
-      name: "",
-      minheight: "",
-      maxheight: "",
-      minweight: "",
-      maxweight: "",
-      image: "",
-      origin: "",
-      life_span: "",
-    });
+    }, 500)
 
+    setTimeout(() => {
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+
+      swalWithBootstrapButtons.fire({
+        title: 'Add new breed?',
+        text: "You will be able to add a new breed!, else, you will be redirected to home",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, please add new!',
+        cancelButtonText: 'No, go home',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          swalWithBootstrapButtons.fire(
+            'Confirm!',
+            'Going to create breed.',
+            'success'
+          )
+          setInput({
+              tempid: [],
+              name: "",
+              minheight: "",
+              maxheight: "",
+              minweight: "",
+              maxweight: "",
+              image: "",
+              origin: "",
+              life_span: "",
+            });
+         uncheckAll();
+          //history.push('/create')
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            'Cancelled',
+            'Redirecting to home :)',
+            'success'
+          )
+          history.push('/home')
+        }
+      })
+    }, 3000)
   };
+
+  function uncheckAll() {
+    document.querySelectorAll('.div_temperaments input[type=checkbox]').forEach(function (checkElement) {
+      checkElement.checked = false;
+    });
+  }
 
   return (
     <div>
       <Link to='/home'><button className="button gohome">Go Home</button></Link>
       <div className="form_container">
         <form
-        //   className={!error ? "clean" : "error"}
+          //   className={!error ? "clean" : "error"}
           onSubmit={(event) => submitBreed(event)}
         >
           <div className="div_name">
@@ -375,7 +432,7 @@ export default function CreateBreed() {
             {error && error.life_span}
           </div>
           <fieldset>
-              <legend>TEMPERAMENTS</legend>
+            <legend>TEMPERAMENTS</legend>
             <div className="div_temperaments">
               {temperaments.slice(0, 20).map((temp) => (
                 <label key={temp.id}>
