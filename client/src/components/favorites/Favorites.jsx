@@ -1,9 +1,11 @@
 import React from "react";
+import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { removeFavorites } from "../../redux/actions/Actions";
 import "./Favorites.css";
+import 'animate.css';
 
 export default function Favorites() {
   //console.log(propsHome);
@@ -12,6 +14,15 @@ export default function Favorites() {
 
   const handleClick = (id) => {
     dispatch(removeFavorites(id));
+    Swal.fire({
+      title: 'Raza eliminada de favoritos',
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+    })
   };
   return (
     <>
