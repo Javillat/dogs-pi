@@ -45,7 +45,11 @@ getDogs = async (req, res) => {
         min_weight: weightminmax[0],
         max_weight: weightminmax[1]
       };
-    });
+    })
+      //FIltrar todos los objetos que sean repetidos.
+      filtermapapi = mapapi.filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i);
+      
+    
     // }));
     //arrayapi.push(...mapapi)
     const getbd = await Dog.findAll({
@@ -67,8 +71,6 @@ getDogs = async (req, res) => {
       }
     })
     console.log(mapbd);
-    //FIltrar todos los objetos que sean repetidos.
-    filtermapapi = mapapi.filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i);
     return [...filtermapapi, ...mapbd];
   } catch (error) {
     console.log(error);
