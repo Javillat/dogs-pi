@@ -16,44 +16,38 @@ getDogs = async (req, res) => {
   try {
     let arrayapi = [];
     //https://api.thedogapi.com/v1/images/search?limit=100&page=0&has_breeds=1&api_key=live_wc4TK5ddDLtQktUPNS4SyHYlzx2JPDBqu0ashjCJZgpS2gyPdjBeuTFwE9oTqxa4
-    for(let i = 0; i <= 6; i++){
+    for (let i = 0; i <= 10; i++) {
       const URLDOG = 'https://api.thedogapi.com/v1/images/search';
-      const getimageapi = await axios.get(URLDOG, { 
-        headers: { 
-          'x-api-key': DOGAPI_KEY 
+      // const getimageapi = await axios.get(URLDOG, { 
+      const getimageapi = (await axios.get(URLDOG, {
+        headers: {
+          'x-api-key': DOGAPI_KEY
         },
         params: {
           limit: 100,
           page: i,
-          has_breeds : true
+          has_breeds: true
           //order : 'ASC'
         }
-      });
-      //console.log(getimageapi);
-      //const getapi = await axios.get(`https://api.thedogapi.com/v1/breeds`);
-      // const mapapi = Promise.all(getimageapi.data.map((item) => {
-        const mapapi = await getimageapi.data.map((item) => {
-        // const breedsitem = await Promise.all(item.breeds.map(async (breed) => {
-          const weightminmax = item.breeds[0].weight.metric.split(" - ");
-          //console.log(breedsitem);
-          // const breedsitemflated = breedsitem.flat();
-          //console.log(item.breeds);
-          return {
-            id:  item.breeds[0].id,
-            name: item.breeds[0].name,
-            image: item.url,
-            idimg: item.id,
-            temperament: item.breeds[0].temperament,
-            min_weight: weightminmax[0],
-            max_weight: weightminmax[1]
-          };
-        });
-        // }));
-        arrayapi.push(...mapapi)
-        console.log(`${i}° Pagina,`, mapapi.length, 'Registros');//Para ver el progreso del fetch
-
-      }//Fin bucle for
-
+      })).data;
+      console.log(`${i}° Pagina,`, getimageapi.length, 'Registros');//Para ver el progreso del fetch
+      arrayapi.push(getimageapi);
+    }//Fin bucle for
+    const flatarray = arrayapi.flat(1);
+    const mapapi = flatarray.map((item) => {
+      const weightminmax = item.breeds[0].weight.metric.split(" - ");
+      return {
+        id: item.breeds[0].id,
+        name: item.breeds[0].name,
+        image: item.url,
+        idimg: item.id,
+        temperament: item.breeds[0].temperament,
+        min_weight: weightminmax[0],
+        max_weight: weightminmax[1]
+      };
+    });
+    // }));
+    //arrayapi.push(...mapapi)
     const getbd = await Dog.findAll({
       include: {
         model: Temperament,
@@ -66,15 +60,16 @@ getDogs = async (req, res) => {
         id: item.id,
         name: item.name,
         image: item.image,
+        idimg: item.id,
         min_weight: item.minweight,
         max_weight: item.maxweight,
         temperament: item.temperaments.map(temperament => temperament.name).join(', '),
       }
     })
-    
-    filtermapapi = arrayapi.filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i);
+    console.log(mapbd);
+    //FIltrar todos los objetos que sean repetidos.
+    filtermapapi = mapapi.filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i);
     return [...filtermapapi, ...mapbd];
-    //return res.send(mapapi);
   } catch (error) {
     console.log(error);
   }
@@ -197,7 +192,7 @@ dogById = async (req, res) => {
       // const getapi = (await axios.get("https://api.thedogapi.com/v1/breeds"))
       let getapi = await axios.get(`https://api.thedogapi.com/v1/images/${id}`);
       //console.log(getapi);
-    
+
       const weightminmax = getapi.data.breeds[0].weight.metric.split(" - ");
       const heightminmax = getapi.data.breeds[0].height.metric.split(" - ");
       const lifespan = getapi.data.breeds[0].life_span.slice(0, 7).split(" - ");
