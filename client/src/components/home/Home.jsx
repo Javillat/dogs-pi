@@ -61,9 +61,9 @@ export default function Home() {
     axios.get(`${REACT_APP_URL}/temperaments`).then((response) => {
     //axios.get("http://localhost:3001/temperaments").then((response) => {
       setTemperaments(response.data);
-      setLoading(false);
       console.log("useeffect", temperaments);
     });
+    setLoading(false);
   }, []);
 
   //ORDENAR/FILTRAR
