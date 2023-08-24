@@ -20,6 +20,7 @@ export function getBreeds(){
     return async (dispatch) => {
         const getData = await axios.get(`${REACT_APP_URL}/dogs`);
         //const getData = await axios.get('http://localhost:3001/dogs');
+        console.log('Action ',getData);
         dispatch({
             type: 'GET_BREEDS',
             payload:getData.data
