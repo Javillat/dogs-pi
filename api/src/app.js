@@ -15,7 +15,12 @@ server.use(bodyParser.json({ limit: '50mb' }));
 server.use(cookieParser());
 server.use(morgan('dev'));
 server.use((req, res, next) => {
-  const allowedOrigins = ['http://localhost:3000', 'https://javier-dogs.vercel.app'];
+  const allowedOrigins = [
+    'http://localhost:3000', 
+    'https://javier-dogs.vercel.app', 
+    'dogs-1qswf01wt-javier-villatotos-projects.vercel.app', 
+    'dogs-git-main-javier-villatotos-projects.vercel.app'
+  ];
   const origin = req.headers.origin;
   if(allowedOrigins.includes(origin)){
     res.setHeader('Access-Control-Allow-Origin', origin);
