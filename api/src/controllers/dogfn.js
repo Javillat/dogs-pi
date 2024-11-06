@@ -12,42 +12,110 @@ const { KEY, DOGAPI_KEY } = process.env;
  * READY
  */
 
+// getDogs = async () => {
+//   try {
+//     const headers = new Headers({
+//       "Content-Type": "application/json",
+//       "x-api-key": DOGAPI_KEY
+//     });
+    
+//     var requestOptions = {
+//       method: 'GET',
+//       headers: headers,
+//       redirect: 'follow'
+//     };
+    
+//     fetch("https://api.thedogapi.com/v1/images/search?size=med&mime_types=jpg&format=json&has_breeds=true&order=RANDOM&page=0&limit=100", requestOptions)
+//       .then(response => response.text())
+//       .then(result => console.log(result))
+//       .catch(error => console.log('error', error));  
+//   }
+//   catch(error){
+
+//   }
+// }
 getDogs = async (req, res) => {
   try {
-    let arrayapi = [];
-    //https://api.thedogapi.com/v1/images/search?limit=100&page=0&has_breeds=1&api_key=live_wc4TK5ddDLtQktUPNS4SyHYlzx2JPDBqu0ashjCJZgpS2gyPdjBeuTFwE9oTqxa4
-    for (let i = 0; i <= 10; i++) {
-      const URLDOG = 'https://api.thedogapi.com/v1/images/search';
-      // const getimageapi = await axios.get(URLDOG, { 
-      const getimageapi = (await axios.get(URLDOG, {
-        headers: {
-          'x-api-key': DOGAPI_KEY
-        },
-        params: {
-          limit: 100,
-          page: i,
-          has_breeds: true
-          //order : 'ASC'
-        }
-      })).data;
-      console.log(`${i}° Pagina,`, getimageapi.length, 'Registros');//Para ver el progreso del fetch
-      arrayapi.push(getimageapi);
-    }//Fin bucle for
-    const flatarray = arrayapi.flat(1);
-    const mapapi = flatarray.map((item) => {
-      const weightminmax = item.breeds[0].weight.metric.split(" - ");
-      return {
-        id: item.breeds[0].id,
-        name: item.breeds[0].name,
-        image: item.url,
-        idimg: item.id,
-        temperament: item.breeds[0].temperament,
-        min_weight: weightminmax[0],
-        max_weight: weightminmax[1]
-      };
+    // let arrayapi = [];
+    // //https://api.thedogapi.com/v1/images/search?limit=100&page=0&has_breeds=1&api_key=live_wc4TK5ddDLtQktUPNS4SyHYlzx2JPDBqu0ashjCJZgpS2gyPdjBeuTFwE9oTqxa4
+    // //for (let i = 0; i <= 10; i++) {
+    //   const URLDOG = 'https://api.thedogapi.com/v1/images/search';
+    //   // const getimageapi = await axios.get(URLDOG, { 
+    //   const getimageapi = (await axios.get(URLDOG, {
+    //     headers: {
+    //       'x-api-key': DOGAPI_KEY
+    //     },
+    //     params: {
+    //       limit: 100,
+    //       page: 0,
+    //       has_breeds: 1
+    //       //order : 'ASC'
+    //     }
+    //   })).data;
+    //   console.log(getimageapi);
+      
+    //   //console.log(`${i}° Pagina,`, getimageapi.length, 'Registros');//Para ver el progreso del fetch
+    //   arrayapi.push(getimageapi);
+    // //}//Fin bucle for
+    // const flatarray = arrayapi.flat(1);
+    // const mapapi = flatarray.map((item) => {
+    //   const weightminmax = item.breeds[0].weight.metric.split(" - ");
+    //   return {
+    //     id: item.breeds[0].id,
+    //     name: item.breeds[0].name,
+    //     image: item.url,
+    //     idimg: item.id,
+    //     temperament: item.breeds[0].temperament,
+    //     min_weight: weightminmax[0],
+    //     max_weight: weightminmax[1]
+    //   };
+    // })
+
+    // const DOGAPI_KEY = 'your_api_key';
+const URLDOG = 'https://api.thedogapi.com/v1/images/search';
+
+// async function fetchDogData() {
+  // Array de solicitudes concurrentes para distintas páginas
+  const requests = Array.from({ length: 100 }, (_, i) => 
+    axios.get(URLDOG, {
+      headers: {
+        'x-api-key': DOGAPI_KEY
+      },
+      params: {
+        limit: 8,
+        page: i,       // Se usa 'i' para paginar cada solicitud
+        has_breeds: 1
+      }
     })
+  );
+
+  // Realizar las solicitudes en paralelo y mapear los resultados
+  const results = await Promise.all(requests);
+  const formattedData = results.flatMap(result => 
+    result.data.map(item => {
+      // Verifica que 'breeds' no esté vacío antes de acceder
+      if (item.breeds && item.breeds.length > 0) {
+        const weightMinMax = item.breeds[0].weight.metric.split(" - ");
+        return {
+          id: item.breeds[0].id,
+          name: item.breeds[0].name,
+          image: item.url,
+          idimg: item.id,
+          temperament: item.breeds[0].temperament,
+          min_weight: weightMinMax[0],
+          max_weight: weightMinMax[1]
+        };
+      }
+    }).filter(Boolean) // Elimina valores undefined si no hay datos en 'breeds'
+  );
+
+// Llamada a la función con 3 páginas para optimizar la carga
+// const arrayapi = await fetchDogData(3);
+// console.log(arrayapi);
+
+
       //FIltrar todos los objetos que sean repetidos.
-      filtermapapi = mapapi.filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i);
+      filtermapapi = formattedData.filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i);
       
     
     // }));
