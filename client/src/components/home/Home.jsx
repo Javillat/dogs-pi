@@ -27,8 +27,7 @@ export default function Home() {
   const cardpage = 8;
   const lastbreed = currentPage * cardpage;
   const firstbreed = lastbreed - cardpage;
-  const currentBreeds =
-    breeds !== undefined ? breeds.slice(firstbreed, lastbreed) : [];
+  const currentBreeds = breeds !== undefined ? breeds.slice(firstbreed, lastbreed) : [];
   const pageNumbers = [];
   const totalBreeds = breeds.length;
   const [temperaments, setTemperaments] = useState([]); //Setear los temperamentos
@@ -218,7 +217,7 @@ export default function Home() {
 
           <div className="container_home">
             {breeds > 0 || breeds !== undefined ? (
-              currentBreeds.map((breed) => (
+              currentBreeds?.map((breed) => (
                 <div key={breed.id}>
                   <Card
                     id={breed.idimg}
