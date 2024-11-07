@@ -18,7 +18,7 @@ export const ORDER_BY_PEQUE = 'ORDER_BY_PEQUE';
 export function getBreeds(){
     //console.log(URL);
     return async (dispatch) => {
-        const getData = await axios.get(`${REACT_APP_URL}/dogs`);
+        const getData = await axios.get(`${REACT_APP_URL}/dogs`, {headers:{'Access-Control-Allow-Origin': 'https://javier-dogs.vercel.app/',}});
         //const getData = await axios.get('http://localhost:3001/dogs');
         console.log('Action ',getData);
         dispatch({
