@@ -22,6 +22,8 @@ server.use((req, res, next) => {
     'dogs-git-main-javier-villatotos-projects.vercel.app'
   ];
   const origin = req.headers.origin;
+  console.log('Presente header',origin);
+  
   if(allowedOrigins.includes(origin)){
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
