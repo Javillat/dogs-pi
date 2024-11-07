@@ -37,7 +37,7 @@ const { KEY, DOGAPI_KEY } = process.env;
 getDogs = async (req, res) => {
   try {
     // let arrayapi = [];
-    // //https://api.thedogapi.com/v1/images/search?limit=100&page=0&has_breeds=1&api_key=live_wc4TK5ddDLtQktUPNS4SyHYlzx2JPDBqu0ashjCJZgpS2gyPdjBeuTFwE9oTqxa4
+    
     // //for (let i = 0; i <= 10; i++) {
     //   const URLDOG = 'https://api.thedogapi.com/v1/images/search';
     //   // const getimageapi = await axios.get(URLDOG, { 
@@ -76,7 +76,7 @@ const URLDOG = 'https://api.thedogapi.com/v1/images/search';
 
 // async function fetchDogData() {
   // Array de solicitudes concurrentes para distintas páginas
-  const requests = Array.from({ length: 100 }, (_, i) => 
+  const requests = Array.from({ length: 60 }, (_, i) => 
     axios.get(URLDOG, {
       headers: {
         'x-api-key': DOGAPI_KEY
