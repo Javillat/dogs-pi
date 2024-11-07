@@ -16,7 +16,13 @@ server.use(cookieParser());
 server.use(morgan('dev'));
 server.use(cors(
   {
-    origin: ['http://localhost:3000','http://localhost:3001','https://javier-dogs.vercel.app','dogs-1qswf01wt-javier-villatotos-projects.vercel.app','dogs-git-main-javier-villatotos-projects.vercel.app'],
+    // origin: [
+    //   'http://localhost:3000',
+    //   'http://localhost:3001',
+    //   'https://javier-dogs.vercel.app',
+    //   'dogs-1qswf01wt-javier-villatotos-projects.vercel.app',
+    //   'dogs-git-main-javier-villatotos-projects.vercel.app'],
+    origin: 'https://javier-dogs.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Origin', 'Content-Type', 'Authorization', 'Accept'],
     credentials: true,
